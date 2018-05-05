@@ -1,0 +1,32 @@
+{
+  "name": "jzz-gui-player",
+  "description": "MIDI player GUI for browser",
+  "authors": [
+    "jazz-soft (http://jazz-soft.net/)"
+  ],
+  "main": "javascript/JZZ.gui.Player.js",
+  "moduleType": [
+    "amd",
+    "node",
+    "globals"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "MIDI",
+    "midi",
+    "player"
+  ],
+  "homepage": "https://github.com/jazz-soft/JZZ-gui-Player",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "minified",
+    "test.*",
+    "Gruntfile.js"
+  ],
+  "dependencies": {
+    "jzz": "^0.4.7",
+    "jzz-midi-smf": "^0.0.3"
+  }
+}

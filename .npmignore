@@ -1,0 +1,6 @@
+minified
+.gitattributes
+.gitignore
+.npmignore
+bower.json
+Gruntfile.js
