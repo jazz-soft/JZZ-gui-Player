@@ -45,8 +45,15 @@ or get the full development version and minified scripts from [**GitHub**](https
     <div id=player></div>
 
     <script><!--
-    var player = new JZZ.gui.Player('player');
-    var data = ... // load MIDI file as string
-    player.load(new JZZ.MIDI.SMF(data));
-    player.play();
+      var player = new JZZ.gui.Player('player');
+      var data = ... // load MIDI file as string
+      player.load(new JZZ.MIDI.SMF(data));
+      player.play();
     --></script>
+
+## More information
+
+Please visit [**https://jazz-soft.net**](https://jazz-soft.net) for more information.  
+Your questions and comments are welcome [**here**](https://jazz-soft.org).
+
+We would really appreciate your [**support**](https://jazz-soft.net/donate)!
