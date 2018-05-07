@@ -87,7 +87,7 @@
     self.moreBtn = new Btn(svg_more);
     self.moreBtn.div.style.left = '238px';
     self.moreBtn.div.title = 'midi';
-    self.moreBtn.div.addEventListener('click', function() { self.more(); });
+    self.moreBtn.div.addEventListener('click', function() { self.settings(); });
     self.moreBtn.off();
     self.gui.appendChild(self.moreBtn.div);
 
@@ -97,14 +97,14 @@
     self.select.style.left = '40px'; // 8
     self.select.style.width = '230px'; // 262
     self.select.style.display = 'none';
-    self.select.addEventListener('click', self.onSelect);
+    self.select.addEventListener('click', function() { self._selected(); });
     self.gui.appendChild(self.select);
 
     self.rail = document.createElement('div');
     self.rail.style.display = 'inline-block';
     self.rail.style.position = 'absolute';
     self.rail.style.top = '19px';
-    self.rail.style.left = '124px';
+    self.rail.style.left = '125px';
     self.rail.style.width = '100px';
     self.rail.style.height = '0';
     self.rail.style.padding = '1px';
@@ -164,27 +164,42 @@
   Player.prototype.load = function(smf) {
     var self = this;
     this._player = smf.player();
-    if (this._out) this._player.conect(this._out);
+    if (this._out) this._player.connect(this._out);
     this._player.onEnd = function() { self._onEnd(); };
     this.enable();
   };
+  Player.prototype._onEnd = function() {
+    if (!this._loop) {
+      if (this._moving) clearInterval(this._moving);
+      this._move();
+      this._playing = false;
+      this.playBtn.off();
+    }
+  };
+  Player.prototype._move = function() {
+    var off = Math.round(this._player.position() * 100 / this._player.duration()) - 5;
+    this.caret.style.left = off + 'px';
+  };
   Player.prototype.play = function() {
     if (this._player) {
+      var self = this;
       this.playBtn.on();
       this.pauseBtn.off();
       if (this._out) {
+        if (this._playing) return;
         this._waiting = false;
         this._player.connect(this._out);
         if (this._paused) this._player.resume();
-        else if (!this._playing) this._player.play();
+        else this._player.play();
+        this._moving = setInterval(function() { self._move(); }, 100);
         this._playing = true;
         this._paused = false;
       }
       else if (!this._waiting) {
-        var self = this;
         this._waiting = true;
         JZZ().openMidiOut().and(function() {
           self._out = this;
+          self._outname = this.name();
           self.play();
         });
       }
@@ -192,17 +207,21 @@
   };
   Player.prototype.stop = function() {
     if (this._player) {
-      if (this._playing) this._player.stop();
+      this._player.stop();
+      if (this._moving) clearInterval(this._moving);
       this._playing = false;
       this._paused = false;
       this.playBtn.off();
       this.pauseBtn.off();
+      this._move();
     }
   };
   Player.prototype.pause = function() {
     if (this._player) {
+      var self = this;
       if (this._paused) {
         this._player.resume();
+        this._moving = setInterval(function() { self._move(); }, 100);
         this._playing = true;
         this._paused = false;
         this.playBtn.on();
@@ -210,6 +229,7 @@
       }
       else if (this._playing) {
         this._player.pause();
+        if (this._moving) clearInterval(this._moving);
         this._playing = false;
         this._paused = true;
         this.playBtn.off();
@@ -225,10 +245,52 @@
       else this.loopBtn.off();
     }
   };
-  Player.prototype._onEnd = function() {
-    if (!this._loop) {
-      this._playing = false;
-      this.playBtn.off();
+  Player.prototype.settings = function() {
+    if (this._more) return;
+    var self = this;
+    this._more = true;
+    this.moreBtn.on();
+    this.select.style.display = 'inline-block';
+    JZZ().refresh().and(function() {
+      var outs = this.info().outputs;
+      var i;
+      for (i = 0; i < self.select.options.length; i++) self.select.remove(i);
+      for (i = 0; i < outs.length; i++) self.select[i] = new Option(outs[i].name, outs[i].name, outs[i].name == self._outname, outs[i].name == self._outname);
+      self.select.size = outs.length < 2 ? 2 : outs.length;
+    });
+  };
+  Player.prototype._selectMidi = function() {
+    var self = this;
+    var port = JZZ().openMidiOut(this._newname).or(function() {
+      self._newname = undefined;
+      self.moreBtn.off();
+      self.select.style.display = 'none';
+      self._more = false;
+    }).and(function() {
+      self._outname = self._newname;
+      if (self._player) {
+        self._player.sndOff();
+        self._player.disconnect(self._out);
+      }
+      self._out = this;
+      if (self._player) self._player.connect(self._out);
+      self._newname = undefined;
+      self.moreBtn.off();
+      self.select.style.display = 'none';
+      self._more = false;
+    });
+  };
+  Player.prototype._selected = function() {
+    var self = this;
+    this._newname = this.select.options[this.select.selectedIndex].value;
+    if (this._newname == this._outname) {
+      this._newname = undefined;
+      this.moreBtn.off();
+      this.select.style.display = 'none';
+      this._more = false;
+    }
+    else {
+      setTimeout(function() { self._selectMidi(); }, 0);
     }
   };
 
