@@ -98,6 +98,8 @@
     self.select.style.width = '230px'; // 262
     self.select.style.display = 'none';
     self.select.addEventListener('click', function() { self._selected(); });
+    self.select.addEventListener('focusout', function() { self._closeselect(); });
+
     self.gui.appendChild(self.select);
 
     self.rail = document.createElement('div');
@@ -245,6 +247,14 @@
       else this.loopBtn.off();
     }
   };
+
+  // selecting MIDI
+
+  Player.prototype._closeselect = function() {
+    this.moreBtn.off();
+    this.select.style.display = 'none';
+    this._more = false;
+  };
   Player.prototype.settings = function() {
     if (this._more) return;
     var self = this;
@@ -257,15 +267,14 @@
       for (i = 0; i < self.select.options.length; i++) self.select.remove(i);
       for (i = 0; i < outs.length; i++) self.select[i] = new Option(outs[i].name, outs[i].name, outs[i].name == self._outname, outs[i].name == self._outname);
       self.select.size = outs.length < 2 ? 2 : outs.length;
+      self.select.focus();
     });
   };
   Player.prototype._selectMidi = function() {
     var self = this;
     var port = JZZ().openMidiOut(this._newname).or(function() {
       self._newname = undefined;
-      self.moreBtn.off();
-      self.select.style.display = 'none';
-      self._more = false;
+      self._closeselect();
     }).and(function() {
       self._outname = self._newname;
       if (self._player) {
@@ -275,9 +284,7 @@
       self._out = this;
       if (self._player) self._player.connect(self._out);
       self._newname = undefined;
-      self.moreBtn.off();
-      self.select.style.display = 'none';
-      self._more = false;
+      self._closeselect();
     });
   };
   Player.prototype._selected = function() {
@@ -285,14 +292,15 @@
     this._newname = this.select.options[this.select.selectedIndex].value;
     if (this._newname == this._outname) {
       this._newname = undefined;
-      this.moreBtn.off();
-      this.select.style.display = 'none';
-      this._more = false;
+      self._closeselect();
     }
     else {
       setTimeout(function() { self._selectMidi(); }, 0);
     }
   };
+
+  Player.prototype.duration = function() { return this._player ? this._player.duration() : 0; };
+  Player.prototype.position = function() { return this._player ? this._player.position() : 0; };
 
   JZZ.gui.Player = Player;
 });

@@ -1,6 +1,6 @@
 {
   "name": "jzz-gui-player",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "MIDI Player GUI for browsers",
   "main": "javascript/JZZ.gui.Player.js",
   "keywords": [
