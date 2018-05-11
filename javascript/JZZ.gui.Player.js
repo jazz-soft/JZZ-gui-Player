@@ -98,6 +98,7 @@
     self.select.style.width = '230px'; // 262
     self.select.style.display = 'none';
     self.select.addEventListener('click', function() { self._selected(); });
+    self.select.addEventListener('keydown', function(e) { self._keydown(e); });
     self.select.addEventListener('focusout', function() { self._closeselect(); });
 
     self.gui.appendChild(self.select);
@@ -298,9 +299,23 @@
       setTimeout(function() { self._selectMidi(); }, 0);
     }
   };
+  Player.prototype._keydown = function(e) {
+    if (e.keyCode == 13 || e.keyCode == 32) this._selected();
+  };
 
   Player.prototype.duration = function() { return this._player ? this._player.duration() : 0; };
   Player.prototype.position = function() { return this._player ? this._player.position() : 0; };
+  Player.prototype.jump = function(pos) {
+    if (this._player) {
+      this._player.jump(pos);
+      this._move();
+      if (pos && !this._playing) {
+        this._paused = true;
+        this.playBtn.off();
+        this.pauseBtn.on();
+      }
+    }
+  };
 
   JZZ.gui.Player = Player;
 });
