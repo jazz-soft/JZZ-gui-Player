@@ -2,13 +2,13 @@
 
 MIDI Player GUI for browsers
 
-![](http://jazz-soft.github.io/img/firefox.jpg)
-![](http://jazz-soft.github.io/img/chrome.jpg)
-![](http://jazz-soft.github.io/img/opera.jpg)
-![](http://jazz-soft.github.io/img/safari.jpg)
-![](http://jazz-soft.github.io/img/msie.jpg)
+![Firefox](http://jazz-soft.github.io/img/firefox.jpg)
+![Chrome](http://jazz-soft.github.io/img/chrome.jpg)
+![Opera](http://jazz-soft.github.io/img/opera.jpg)
+![Safari](http://jazz-soft.github.io/img/safari.jpg)
+![Internet Explorer](http://jazz-soft.github.io/img/msie.jpg)
 
-![](https://jazz-soft.github.io/img/jzzguiplayer.png)
+![MIDI Player](https://jazz-soft.github.io/img/jzzguiplayer.png)
 
 ## Install
 

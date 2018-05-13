@@ -13,6 +13,17 @@
   if (!JZZ.gui) JZZ.gui = {};
   if (JZZ.gui.Player) return;
 
+  var _firefoxBug;
+  function _fixBtnUp(e) {
+    if (typeof e.buttons == 'undefined' || e.buttons != _firefoxBug) return e;
+    e.stopPropagation();
+    if (e.button == 0) return { buttons: _firefoxBug ^ 1};
+    if (e.button == 1) return { buttons: _firefoxBug ^ 4};
+    if (e.button == 2) return { buttons: _firefoxBug ^ 2};
+  }
+  function _lftBtnDn(e) { return typeof e.buttons == 'undefined' ? !e.button : e.buttons & 1; }
+  function _lftBtnUp(e) { return typeof e.buttons == 'undefined' ? !e.button : !(e.buttons & 1); }
+
   function Btn(html) {
     this.div = document.createElement('div');
     this.div.style.display = 'inline-block';
@@ -131,7 +142,11 @@
     self.caret.style.borderRadius = '6px';
     self.caret.style.borderColor = '#aaa';
     self.caret.style.backgroundColor = '#888';
+    self.caret.addEventListener('mousedown', function(e) { self._mousedown(e); });
     self.rail.appendChild(self.caret);
+
+    window.addEventListener('mousemove', function(e) { self._mousemove(e); });
+    window.addEventListener('mouseup', function(e) { self._mouseup(e); });
   }
 
   function Player(at) {
@@ -309,10 +324,51 @@
     if (this._player) {
       this._player.jump(pos);
       this._move();
-      if (pos && !this._playing) {
-        this._paused = true;
-        this.playBtn.off();
-        this.pauseBtn.on();
+      if (!this._playing) {
+        if (pos) {
+          this._paused = true;
+          this.playBtn.off();
+          this.pauseBtn.on();
+        }
+        else {
+          this._paused = false;
+          this.playBtn.off();
+          this.pauseBtn.off();
+        }
+      }
+    }
+  };
+
+  // mouse dragging
+
+  Player.prototype._mousedown = function(e) {
+    if (this._player) {
+      this.caret.style.backgroundColor = '#ddd';
+      this._wasPlaying = this._playing;
+      this._player.pause();
+      this._caretX = e.clientX;
+      this._caretPos = parseInt(this.caret.style.left) + 5;
+    }
+  };
+  Player.prototype._mouseup = function(e) {
+    if (this._player) {
+      if (typeof this._caretX != 'undefined') {
+        if (this._wasPlaying) {
+          this._wasPlaying = undefined;
+          this._player.resume();
+        }
+        this.caret.style.backgroundColor = '#aaa';
+        this._caretX = undefined;
+      }
+    }
+  };
+  Player.prototype._mousemove = function(e) {
+    if (this._player) {
+      if (typeof this._caretX != 'undefined') {
+        var to = this._caretPos + e.clientX - this._caretX;
+        if (to < 0) to = 0;
+        if (to > 100) to = 100;
+        this.jump(this.duration() * to / 100.0);
       }
     }
   };
