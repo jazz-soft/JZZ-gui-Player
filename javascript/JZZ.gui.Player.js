@@ -272,7 +272,7 @@
     this._more = false;
   };
   Player.prototype.settings = function() {
-    if (this._more) return;
+    if (this._more || this._connector) return;
     var self = this;
     this._more = true;
     this.moreBtn.on();
@@ -370,6 +370,20 @@
         if (to > 100) to = 100;
         this.jump(this.duration() * to / 100.0);
       }
+    }
+  };
+
+  Player.prototype.connect = function(port) {
+    if (!this._connector) {
+      this._connector = new JZZ.Widget();
+    }
+    this._connector.connect(port);
+    this.moreBtn.disable();
+    this._out = this._connector;
+  };
+  Player.prototype.disconnect = function(port) {
+    if (this._connector) {
+      this._connector.disconnect(port);
     }
   };
 
