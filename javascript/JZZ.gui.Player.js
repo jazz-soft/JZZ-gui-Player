@@ -292,6 +292,7 @@
       self._newname = undefined;
       self._closeselect();
     }).and(function() {
+      if (self._connector) return;
       self._outname = self._newname;
       if (self._player) {
         self._player.sndOff();
@@ -376,14 +377,27 @@
   Player.prototype.connect = function(port) {
     if (!this._connector) {
       this._connector = new JZZ.Widget();
+      if (this._player) {
+        if (this._playing) this._player.sndOff();
+        this._player.disconnect();
+        this._player.connect(this._connector);
+      }
+      this.moreBtn.disable();
+      this._out = this._connector;
     }
     this._connector.connect(port);
-    this.moreBtn.disable();
-    this._out = this._connector;
   };
   Player.prototype.disconnect = function(port) {
     if (this._connector) {
+      if (this._player && this._playing) this._player.sndOff();
       this._connector.disconnect(port);
+      if (!this._connector.connected()) {
+        this.moreBtn.off();
+        this.select.style.display = 'none';
+        this._out = JZZ().openMidiOut();
+        if (this._player) this._player.connect(this._out);
+        this._connector = undefined;
+      }
     }
   };
 

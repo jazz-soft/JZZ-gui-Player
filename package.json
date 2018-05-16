@@ -10,7 +10,7 @@
   ],
   "author": "jazz-soft (http://jazz-soft.net/)",
   "dependencies": {
-    "jzz": "^0.4.7",
+    "jzz": "^0.4.8",
     "jzz-midi-smf": "^0.0.4"
   },
   "devDependencies": {
