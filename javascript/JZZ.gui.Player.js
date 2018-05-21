@@ -13,17 +13,6 @@
   if (!JZZ.gui) JZZ.gui = {};
   if (JZZ.gui.Player) return;
 
-  var _firefoxBug;
-  function _fixBtnUp(e) {
-    if (typeof e.buttons == 'undefined' || e.buttons != _firefoxBug) return e;
-    e.stopPropagation();
-    if (e.button == 0) return { buttons: _firefoxBug ^ 1};
-    if (e.button == 1) return { buttons: _firefoxBug ^ 4};
-    if (e.button == 2) return { buttons: _firefoxBug ^ 2};
-  }
-  function _lftBtnDn(e) { return typeof e.buttons == 'undefined' ? !e.button : e.buttons & 1; }
-  function _lftBtnUp(e) { return typeof e.buttons == 'undefined' ? !e.button : !(e.buttons & 1); }
-
   function Btn(html) {
     this.div = document.createElement('div');
     this.div.style.display = 'inline-block';
@@ -99,15 +88,15 @@
     self.moreBtn.div.style.left = '238px';
     self.moreBtn.div.title = 'midi';
     self.moreBtn.div.addEventListener('click', function() { self.settings(); });
-    self.moreBtn.off();
     self.gui.appendChild(self.moreBtn.div);
 
     self.select = document.createElement('select');
     self.select.style.position = 'absolute';
     self.select.style.top = '30px';
-    self.select.style.left = '40px'; // 8
-    self.select.style.width = '230px'; // 262
+    self.select.style.left = '40px';
+    self.select.style.width = '230px';
     self.select.style.display = 'none';
+    self.select.style.zIndex = 1;
     self.select.addEventListener('click', function() { self._selected(); });
     self.select.addEventListener('keydown', function(e) { self._keydown(e); });
     self.select.addEventListener('focusout', function() { self._closeselect(); });
@@ -149,22 +138,41 @@
     window.addEventListener('mouseup', function(e) { self._mouseup(e); });
   }
 
-  function Player(at) {
-    if (!(this instanceof Player)) return new Player(at);
+  var _floating = 0;
+  function Player(x, y) {
+    if (!(this instanceof Player)) return new Player(x, y);
     _createGUI(this);
-    if (typeof at == 'string') at = document.getElementById(at);
-    try { at.appendChild(this.gui); }
-    catch(e) {
-      var bottom = document.createElement('div');
-      bottom.appendChild(this.gui);
-      document.body.appendChild(bottom);
+    if (typeof x == 'string') {
+      try {
+        document.getElementById(x).appendChild(this.gui);
+        return this;
+      }
+      catch(e) {}
     }
+    try {
+      x.appendChild(this.gui);
+      return this;
+    }
+    catch(e) {}
+    if (x != parseInt(x) || y != parseInt(y)) {
+      x = _floating * 45 + 5;
+      y = _floating * 15 + 5;
+      _floating++;
+    }
+    this.gui.style.position = 'fixed';
+    this.gui.style.top = x + 'px';
+    this.gui.style.left = y + 'px';
+    this.gui.style.opacity = 0.9;
+    var self = this;
+    this.gui.addEventListener('mousedown', function(e) { self._startmove(e); });
+    document.body.appendChild(this.gui);
   }
   Player.prototype.disable = function() {
     this.playBtn.disable();
     this.pauseBtn.disable();
     this.stopBtn.disable();
     this.loopBtn.disable();
+    this.moreBtn.disable();
     this.rail.style.borderColor = '#aaa';
     this.rail.style.backgroundColor = '#888';
     this.caret.style.borderColor = '#aaa';
@@ -175,6 +183,7 @@
     this.pauseBtn.off();
     this.stopBtn.off();
     this.loopBtn.off();
+    this.moreBtn.off();
     this.rail.style.borderColor = '#ccc';
     this.caret.style.backgroundColor = '#aaa';
     this.caret.style.borderColor = '#ccc';
@@ -238,12 +247,15 @@
     if (this._player) {
       var self = this;
       if (this._paused) {
-        this._player.resume();
-        this._moving = setInterval(function() { self._move(); }, 100);
-        this._playing = true;
-        this._paused = false;
-        this.playBtn.on();
-        this.pauseBtn.off();
+        if (this._out) {
+          this._player.resume();
+          this._moving = setInterval(function() { self._move(); }, 100);
+          this._playing = true;
+          this._paused = false;
+          this.playBtn.on();
+          this.pauseBtn.off();
+        }
+        else this.play();
       }
       else if (this._playing) {
         this._player.pause();
@@ -272,7 +284,7 @@
     this._more = false;
   };
   Player.prototype.settings = function() {
-    if (this._more || this._connector) return;
+    if (!this._player || this._more || this._connector) return;
     var self = this;
     this._more = true;
     this.moreBtn.on();
@@ -341,14 +353,23 @@
   };
 
   // mouse dragging
+  function _lftBtnDn(e) { return typeof e.buttons == 'undefined' ? !e.button : e.buttons & 1; }
 
   Player.prototype._mousedown = function(e) {
-    if (this._player) {
+    if (_lftBtnDn(e) && this._player) {
       this.caret.style.backgroundColor = '#ddd';
       this._wasPlaying = this._playing;
       this._player.pause();
       this._caretX = e.clientX;
       this._caretPos = parseInt(this.caret.style.left) + 5;
+    }
+  };
+  Player.prototype._startmove = function(e) {
+    if (_lftBtnDn(e)) {
+      this._startX = parseInt(this.gui.style.left);
+      this._startY = parseInt(this.gui.style.top);
+      this._clickX = e.clientX;
+      this._clickY = e.clientY;
     }
   };
   Player.prototype._mouseup = function(e) {
@@ -362,15 +383,24 @@
         this._caretX = undefined;
       }
     }
+    if (typeof this._startX != 'undefined') {
+      this._startX = undefined;
+      this._startY = undefined;
+      this._clickX = undefined;
+      this._clickY = undefined;
+    }
   };
   Player.prototype._mousemove = function(e) {
-    if (this._player) {
-      if (typeof this._caretX != 'undefined') {
-        var to = this._caretPos + e.clientX - this._caretX;
-        if (to < 0) to = 0;
-        if (to > 100) to = 100;
-        this.jump(this.duration() * to / 100.0);
-      }
+    e.preventDefault();
+    if (this._player && typeof this._caretX != 'undefined') {
+      var to = this._caretPos + e.clientX - this._caretX;
+      if (to < 0) to = 0;
+      if (to > 100) to = 100;
+      this.jump(this.duration() * to / 100.0);
+    }
+    else if (typeof this._startX != 'undefined') {
+      this.gui.style.left = this._startX - this._clickX + e.clientX + 'px';
+      this.gui.style.top = this._startY - this._clickY + e.clientY + 'px';
     }
   };
 
