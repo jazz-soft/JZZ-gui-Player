@@ -183,7 +183,7 @@
     this.pauseBtn.off();
     this.stopBtn.off();
     this.loopBtn.off();
-    this.moreBtn.off();
+    if (!this._out) this.moreBtn.off();
     this.rail.style.borderColor = '#ccc';
     this.caret.style.backgroundColor = '#aaa';
     this.caret.style.borderColor = '#ccc';
