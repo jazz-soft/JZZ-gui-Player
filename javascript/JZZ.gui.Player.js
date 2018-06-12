@@ -252,27 +252,31 @@
       this._move();
     }
   };
-  Player.prototype.pause = function() {
+  Player.prototype.pause = function(p) {
     if (this._player) {
       var self = this;
       if (this._paused) {
-        if (this._out) {
-          this._player.resume();
-          this._moving = setInterval(function() { self._move(); }, 100);
-          this._playing = true;
-          this._paused = false;
-          this.playBtn.on();
-          this.pauseBtn.off();
+        if (typeof p == 'undefined' || p) {
+          if (this._out) {
+            this._player.resume();
+            this._moving = setInterval(function() { self._move(); }, 100);
+            this._playing = true;
+            this._paused = false;
+            this.playBtn.on();
+            this.pauseBtn.off();
+          }
+          else this.play();
         }
-        else this.play();
       }
       else if (this._playing) {
-        this._player.pause();
-        if (this._moving) clearInterval(this._moving);
-        this._playing = false;
-        this._paused = true;
-        this.playBtn.off();
-        this.pauseBtn.on();
+        if (typeof p == 'undefined' || !p) {
+          this._player.pause();
+          if (this._moving) clearInterval(this._moving);
+          this._playing = false;
+          this._paused = true;
+          this.playBtn.off();
+          this.pauseBtn.on();
+        }
       }
     }
   };
