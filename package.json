@@ -8,7 +8,7 @@
     "midi",
     "player"
   ],
-  "author": "jazz-soft (http://jazz-soft.net/)",
+  "author": "jazz-soft (https://jazz-soft.net/)",
   "dependencies": {
     "jzz": "^0.5.0",
     "jzz-midi-smf": "^0.0.9"
@@ -23,7 +23,7 @@
     "type": "git",
     "url": "https://github.com/jazz-soft/JZZ-gui-Player.git"
   },
-  "homepage": "http://jazz-soft.net",
-  "bugs": "http://jazz-soft.org",
+  "homepage": "https://jazz-soft.net",
+  "bugs": "https://jazz-soft.org",
   "license": "MIT"
 }
