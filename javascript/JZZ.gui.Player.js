@@ -233,7 +233,7 @@
       }
       else if (!this._waiting) {
         this._waiting = true;
-        JZZ().openMidiOut().and(function() {
+        JZZ().openMidiOut(undefined, /MIDI Through/i).and(function() {
           self._out = this;
           self._outname = this.name();
           self.play();
@@ -446,7 +446,7 @@
       if (!this._connector.connected()) {
         this.moreBtn.off();
         this.select.style.display = 'none';
-        this._out = JZZ().openMidiOut();
+        this._out = JZZ().openMidiOut(undefined, /MIDI Through/i);
         if (this._player) this._player.connect(this._out);
         this._connector = undefined;
       }
