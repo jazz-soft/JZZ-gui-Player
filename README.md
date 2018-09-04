@@ -6,7 +6,9 @@ MIDI Player GUI for browsers
 ![Chrome](http://jazz-soft.github.io/img/chrome.jpg)
 ![Opera](http://jazz-soft.github.io/img/opera.jpg)
 ![Safari](http://jazz-soft.github.io/img/safari.jpg)
-![Internet Explorer](http://jazz-soft.github.io/img/msie.jpg)
+![Internet Explorer](http://jazz-soft.github.io/img/msie.jpg)  
+[![npm](https://img.shields.io/npm/v/jzz-gui-player.svg)](https://www.npmjs.com/package/jzz-gui-player)
+[![npm](https://img.shields.io/npm/dt/jzz-gui-player.svg)](https://www.npmjs.com/package/jzz-gui-player)
 
 ![MIDI Player](https://jazz-soft.github.io/img/jzzguiplayer.png)
 
@@ -14,9 +16,9 @@ See the [**demo**](https://jazz-soft.github.io/modules/smf/index.html)...
 
 ## Install
 
-[**npm install jzz-gui-player**](https://www.npmjs.com/package/jzz-gui-player)  
-or **bower install jzz-gui-player**  
-or **yarn add jzz-gui-player**  
+`npm install jzz-gui-player --save`  
+or `bower install jzz-gui-player`  
+or `yarn add jzz-gui-player`  
 or get the full development version and minified scripts from [**GitHub**](https://github.com/jazz-soft/JZZ-gui-Player)
 
 ## Usage
