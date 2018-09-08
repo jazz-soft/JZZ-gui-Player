@@ -1,6 +1,6 @@
 {
   "name": "jzz-gui-player",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "MIDI Player GUI for browsers",
   "main": "javascript/JZZ.gui.Player.js",
   "keywords": [
@@ -11,13 +11,13 @@
   "author": "jazz-soft (https://jazz-soft.net/)",
   "dependencies": {
     "jzz": "^0.5.5",
-    "jzz-midi-smf": "^0.1.6"
+    "jzz-midi-smf": "^1.0.0"
   },
   "devDependencies": {
     "jzz-synth-osc": "^1.0.5",
     "grunt": "^1.0.3",
     "grunt-contrib-jshint": "^1.1.0",
-    "grunt-contrib-uglify": "^3.4.0"
+    "grunt-contrib-uglify": "^4.0.0"
   },
   "repository": {
     "type": "git",
