@@ -23,6 +23,10 @@ or get the full development version and minified scripts from [**GitHub**](https
 
 ## Usage
 
+##### Web Component (Polymer)
+
+https://github.com/jazz-soft/polymer-midi-player
+
 ##### Plain HTML
 
     <script src="JZZ.js"></script>
