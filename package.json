@@ -10,14 +10,15 @@
   ],
   "author": "jazz-soft (https://jazz-soft.net/)",
   "dependencies": {
-    "jzz": "^0.6.3",
-    "jzz-midi-smf": "^1.0.6"
+    "jzz": "^0.6.6",
+    "jzz-midi-smf": "^1.0.8"
   },
   "devDependencies": {
-    "jzz-synth-osc": "^1.1.1",
     "grunt": "^1.0.3",
     "grunt-contrib-jshint": "^2.0.0",
-    "grunt-contrib-uglify": "^4.0.0"
+    "grunt-contrib-uglify": "^4.0.0",
+    "jzz-synth-osc": "^1.1.1",
+    "jzz-synth-tiny": "^1.0.3"
   },
   "repository": {
     "type": "git",
