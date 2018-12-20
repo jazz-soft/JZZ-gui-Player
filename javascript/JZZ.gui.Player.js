@@ -3,7 +3,7 @@
     module.exports = factory;
   }
   else if (typeof define === 'function' && define.amd) {
-    define('JZZ.midi.SMF', ['JZZ', 'JZZ.midi.SMF'], factory);
+    define('JZZ.gui.Player', ['JZZ', 'JZZ.midi.SMF'], factory);
   }
   else {
     factory(JZZ);
