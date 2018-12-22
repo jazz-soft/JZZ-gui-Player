@@ -195,7 +195,9 @@
     this._player.onEnd = function() { self._onEnd(); };
     this.enable();
   };
+  Player.prototype.onEnd = function() {};
   Player.prototype._onEnd = function() {
+    this.onEnd();
     if (this._loop && this._loop != -1) this._loop--;
     if (!this._loop) {
       if (this._moving) clearInterval(this._moving);
