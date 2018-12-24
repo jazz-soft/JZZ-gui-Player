@@ -415,14 +415,15 @@
     }
   };
   Player.prototype._mousemove = function(e) {
-    e.preventDefault();
     if (this._player && typeof this._caretX != 'undefined') {
+      e.preventDefault();
       var to = this._caretPos + e.clientX - this._caretX;
       if (to < 0) to = 0;
       if (to > 100) to = 100;
       this.jump(this.duration() * to / 100.0);
     }
     else if (typeof this._startX != 'undefined') {
+      e.preventDefault();
       this.gui.style.left = this._startX - this._clickX + e.clientX + 'px';
       this.gui.style.top = this._startY - this._clickY + e.clientY + 'px';
     }
