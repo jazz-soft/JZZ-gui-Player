@@ -49,7 +49,7 @@
   var svg_loop = '<svg fill="#555" height="18" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/></svg>';
   var svg_more = '<svg fill="#555" height="18" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 3v9.28c-.47-.17-.97-.28-1.5-.28C8.01 12 6 14.01 6 16.5S8.01 21 10.5 21c2.31 0 4.2-1.75 4.45-4H15V6h4V3h-7z"/></svg>';
 
-  function _createGUI(self) {
+  function _createGUI(self, arg) {
     self.gui = document.createElement('div');
     self.gui.style.display = 'inline-block';
     self.gui.style.position = 'relative';
@@ -60,48 +60,58 @@
     self.gui.style.width = '270px';
     self.gui.style.height = '40px';
 
-    self.playBtn = new Btn(svg_play);
-    self.playBtn.div.style.left = '8px';
-    self.playBtn.div.title = 'play';
-    self.playBtn.div.addEventListener('click', function() { self.play(); });
-    self.gui.appendChild(self.playBtn.div);
+    if (arg.play) {
+      self.playBtn = new Btn(svg_play);
+      self.playBtn.div.style.left = '8px';
+      self.playBtn.div.title = 'play';
+      self.playBtn.div.addEventListener('click', function() { self.play(); });
+      self.gui.appendChild(self.playBtn.div);
+    }
 
-    self.pauseBtn = new Btn(svg_pause);
-    self.pauseBtn.div.style.left = '36px';
-    self.pauseBtn.div.title = 'pause';
-    self.pauseBtn.div.addEventListener('click', function() { self.pause(); });
-    self.gui.appendChild(self.pauseBtn.div);
+    if (arg.pause) {
+      self.pauseBtn = new Btn(svg_pause);
+      self.pauseBtn.div.style.left = '36px';
+      self.pauseBtn.div.title = 'pause';
+      self.pauseBtn.div.addEventListener('click', function() { self.pause(); });
+      self.gui.appendChild(self.pauseBtn.div);
+    }
 
-    self.stopBtn = new Btn(svg_stop);
-    self.stopBtn.div.style.left = '64px';
-    self.stopBtn.div.title = 'stop';
-    self.stopBtn.div.addEventListener('click', function() { self.stop(); });
-    self.gui.appendChild(self.stopBtn.div);
+    if (arg.stop) {
+      self.stopBtn = new Btn(svg_stop);
+      self.stopBtn.div.style.left = '64px';
+      self.stopBtn.div.title = 'stop';
+      self.stopBtn.div.addEventListener('click', function() { self.stop(); });
+      self.gui.appendChild(self.stopBtn.div);
+    }
 
-    self.loopBtn = new Btn(svg_loop);
-    self.loopBtn.div.style.left = '92px';
-    self.loopBtn.div.title = 'loop';
-    self.loopBtn.div.addEventListener('click', function() { self.loop(); });
-    self.gui.appendChild(self.loopBtn.div);
+    if (arg.loop) {
+      self.loopBtn = new Btn(svg_loop);
+      self.loopBtn.div.style.left = '92px';
+      self.loopBtn.div.title = 'loop';
+      self.loopBtn.div.addEventListener('click', function() { self.loop(); });
+      self.gui.appendChild(self.loopBtn.div);
+    }
 
-    self.moreBtn = new Btn(svg_more);
-    self.moreBtn.div.style.left = '238px';
-    self.moreBtn.div.title = 'midi';
-    self.moreBtn.div.addEventListener('click', function() { self.settings(); });
-    self.gui.appendChild(self.moreBtn.div);
+    if (arg.more) {
+      self.moreBtn = new Btn(svg_more);
+      self.moreBtn.div.style.left = '238px';
+      self.moreBtn.div.title = 'midi';
+      self.moreBtn.div.addEventListener('click', function() { self.settings(); });
+      self.gui.appendChild(self.moreBtn.div);
 
-    self.select = document.createElement('select');
-    self.select.style.position = 'absolute';
-    self.select.style.top = '30px';
-    self.select.style.left = '40px';
-    self.select.style.width = '230px';
-    self.select.style.display = 'none';
-    self.select.style.zIndex = 1;
-    self.select.addEventListener('click', function() { self._selected(); });
-    self.select.addEventListener('keydown', function(e) { self._keydown(e); });
-    self.select.addEventListener('focusout', function() { self._closeselect(); });
+      self.select = document.createElement('select');
+      self.select.style.position = 'absolute';
+      self.select.style.top = '30px';
+      self.select.style.left = '40px';
+      self.select.style.width = '230px';
+      self.select.style.display = 'none';
+      self.select.style.zIndex = 1;
+      self.select.addEventListener('click', function() { self._selected(); });
+      self.select.addEventListener('keydown', function(e) { self._keydown(e); });
+      self.select.addEventListener('focusout', function() { self._closeselect(); });
 
-    self.gui.appendChild(self.select);
+      self.gui.appendChild(self.select);
+    }
 
     self.rail = document.createElement('div');
     self.rail.style.display = 'inline-block';
@@ -141,7 +151,22 @@
   var _floating = 0;
   function Player(x, y) {
     if (!(this instanceof Player)) return new Player(x, y);
-    _createGUI(this);
+    var arg = {
+      at: undefined,
+      x: undefined,
+      y: undefined,
+      play: true,
+      record: false,
+      pause: true,
+      stop: true,
+      loop: true,
+      open: true,
+      more: true,
+      close: false
+    };
+    for (var k in arg) if (arg.hasOwnProperty(k) && typeof x[k] != 'undefined') arg[k] = x[k];
+
+    _createGUI(this, arg);
     if (typeof x == 'string') {
       try {
         document.getElementById(x).appendChild(this.gui);
@@ -154,6 +179,8 @@
       return this;
     }
     catch(e) {}
+
+
     if (x != parseInt(x) || y != parseInt(y)) {
       x = _floating * 45 + 5;
       y = _floating * 15 + 5;
