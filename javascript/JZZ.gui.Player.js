@@ -13,6 +13,9 @@
   if (!JZZ.gui) JZZ.gui = {};
   if (JZZ.gui.Player) return;
 
+  function empty() {}
+  var _noBtn = { on: empty, off: empty, disable: empty };
+
   function Btn(html) {
     this.div = document.createElement('div');
     this.div.style.display = 'inline-block';
@@ -60,41 +63,54 @@
     self.gui.style.width = '270px';
     self.gui.style.height = '40px';
 
+    var left = 8;
+    var right = 238;
+    var step = 28;
+
     if (arg.play) {
       self.playBtn = new Btn(svg_play);
-      self.playBtn.div.style.left = '8px';
+      self.playBtn.div.style.left = left + 'px';
+      left += step;
       self.playBtn.div.title = 'play';
       self.playBtn.div.addEventListener('click', function() { self.play(); });
       self.gui.appendChild(self.playBtn.div);
     }
+    else self.playBtn = _noBtn;
 
     if (arg.pause) {
       self.pauseBtn = new Btn(svg_pause);
-      self.pauseBtn.div.style.left = '36px';
+      self.pauseBtn.div.style.left = left + 'px';
+      left += step;
       self.pauseBtn.div.title = 'pause';
       self.pauseBtn.div.addEventListener('click', function() { self.pause(); });
       self.gui.appendChild(self.pauseBtn.div);
     }
+    else self.pauseBtn = _noBtn;
 
     if (arg.stop) {
       self.stopBtn = new Btn(svg_stop);
-      self.stopBtn.div.style.left = '64px';
+      self.stopBtn.div.style.left = left + 'px';
+      left += step;
       self.stopBtn.div.title = 'stop';
       self.stopBtn.div.addEventListener('click', function() { self.stop(); });
       self.gui.appendChild(self.stopBtn.div);
     }
+    else self.stopBtn = _noBtn;
 
     if (arg.loop) {
       self.loopBtn = new Btn(svg_loop);
-      self.loopBtn.div.style.left = '92px';
+      self.loopBtn.div.style.left = left + 'px';
+      left += step;
       self.loopBtn.div.title = 'loop';
       self.loopBtn.div.addEventListener('click', function() { self.loop(); });
       self.gui.appendChild(self.loopBtn.div);
     }
+    else self.loopBtn = _noBtn;
 
     if (arg.more) {
       self.moreBtn = new Btn(svg_more);
-      self.moreBtn.div.style.left = '238px';
+      self.moreBtn.div.style.left = right + 'px';
+      right -= step;
       self.moreBtn.div.title = 'midi';
       self.moreBtn.div.addEventListener('click', function() { self.settings(); });
       self.gui.appendChild(self.moreBtn.div);
@@ -112,13 +128,16 @@
 
       self.gui.appendChild(self.select);
     }
+    else self.moreBtn = _noBtn;
+
+    self.rlen = right - left + 10;
 
     self.rail = document.createElement('div');
     self.rail.style.display = 'inline-block';
     self.rail.style.position = 'absolute';
     self.rail.style.top = '19px';
-    self.rail.style.left = '125px';
-    self.rail.style.width = '100px';
+    self.rail.style.left = (left + 5) + 'px';
+    self.rail.style.width = self.rlen + 'px';
     self.rail.style.height = '0';
     self.rail.style.padding = '1px';
     self.rail.style.borderStyle = 'solid';
@@ -242,7 +261,7 @@
     }
   };
   Player.prototype._move = function() {
-    var off = Math.round(this._player.position() * 100 / this._player.duration()) - 5;
+    var off = Math.round(this._player.position() * this.rlen / this._player.duration()) - 5;
     this.caret.style.left = off + 'px';
   };
   Player.prototype.play = function() {
@@ -446,8 +465,9 @@
       e.preventDefault();
       var to = this._caretPos + e.clientX - this._caretX;
       if (to < 0) to = 0;
-      if (to > 100) to = 100;
-      this.jump(this.duration() * to / 100.0);
+      //if (to > 100) to = 100;
+      if (to > this.rlen) to = this.rlen;
+      this.jump(this.duration() * to * 1.0 / this.rlen);
     }
     else if (typeof this._startX != 'undefined') {
       e.preventDefault();
