@@ -184,30 +184,32 @@
       close: false
     };
     for (var k in arg) if (arg.hasOwnProperty(k) && typeof x[k] != 'undefined') arg[k] = x[k];
-
+    if (typeof arg.at == 'undefined') arg.at = x;
+    if (typeof arg.x == 'undefined') arg.x = x;
+    if (typeof arg.y == 'undefined') arg.y = y;
     _createGUI(this, arg);
-    if (typeof x == 'string') {
+
+    if (typeof arg.at == 'string') {
       try {
-        document.getElementById(x).appendChild(this.gui);
+        document.getElementById(arg.at).appendChild(this.gui);
         return this;
       }
       catch(e) {}
     }
     try {
-      x.appendChild(this.gui);
+      arg.at.appendChild(this.gui);
       return this;
     }
     catch(e) {}
 
-
-    if (x != parseInt(x) || y != parseInt(y)) {
-      x = _floating * 45 + 5;
-      y = _floating * 15 + 5;
+    if (arg.x != parseInt(arg.x) || arg.y != parseInt(arg.y)) {
+      arg.x = _floating * 45 + 5;
+      arg.y = _floating * 15 + 5;
       _floating++;
     }
     this.gui.style.position = 'fixed';
-    this.gui.style.top = x + 'px';
-    this.gui.style.left = y + 'px';
+    this.gui.style.top = arg.x + 'px';
+    this.gui.style.left = arg.y + 'px';
     this.gui.style.opacity = 0.9;
     var self = this;
     this.gui.addEventListener('mousedown', function(e) { self._startmove(e); });
