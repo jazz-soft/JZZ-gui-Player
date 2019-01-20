@@ -14,7 +14,7 @@
   if (JZZ.gui.Player) return;
 
   function empty() {}
-  var _noBtn = { on: empty, off: empty, disable: empty };
+  var _noBtn = { on: empty, off: empty, disable: empty, div: {} };
 
   function Btn(html) {
     this.div = document.createElement('div');
@@ -51,6 +51,7 @@
   var svg_stop = '<svg fill="#555" height="18" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"/><path d="M6 6h12v12H6z"/></svg>';
   var svg_loop = '<svg fill="#555" height="18" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/></svg>';
   var svg_more = '<svg fill="#555" height="18" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 3v9.28c-.47-.17-.97-.28-1.5-.28C8.01 12 6 14.01 6 16.5S8.01 21 10.5 21c2.31 0 4.2-1.75 4.45-4H15V6h4V3h-7z"/></svg>';
+  var svg_open = '<svg fill="#555" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M10 4H2v16h20V6H12l-2-2z"/></svg>';
 
   function _createGUI(self, arg) {
     self.gui = document.createElement('div');
@@ -130,6 +131,24 @@
     }
     else self.moreBtn = _noBtn;
 
+    if (arg.open) {
+      self.openBtn = new Btn(svg_open);
+      self.openBtn.div.style.left = right + 'px';
+      right -= step;
+      self.openBtn.div.title = 'file';
+      self.gui.appendChild(self.openBtn.div);
+      self.openBtn.off();
+
+      self.fileInput = document.createElement('input');
+      self.fileInput.type = 'file';
+      self.fileInput.style.display = 'none';
+      self.fileInput.accept = '.mid, .midi, .kar, .rmi';
+      self.gui.appendChild(self.fileInput);
+
+      self.openBtn.div.addEventListener('click', function() { self.fileInput.click(); });
+    }
+    else self.openBtn = _noBtn;
+
     self.rlen = right - left + 10;
 
     self.rail = document.createElement('div');
@@ -179,7 +198,7 @@
       pause: true,
       stop: true,
       loop: true,
-      open: true,
+      open: false,
       more: true,
       close: false
     };
@@ -221,6 +240,7 @@
     this.stopBtn.disable();
     this.loopBtn.disable();
     this.moreBtn.disable();
+    this.openBtn.off();
     this.rail.style.borderColor = '#aaa';
     this.rail.style.backgroundColor = '#888';
     this.caret.style.borderColor = '#aaa';
