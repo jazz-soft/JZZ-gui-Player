@@ -53,6 +53,8 @@
   var svg_more = '<svg fill="#555" height="18" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 3v9.28c-.47-.17-.97-.28-1.5-.28C8.01 12 6 14.01 6 16.5S8.01 21 10.5 21c2.31 0 4.2-1.75 4.45-4H15V6h4V3h-7z"/></svg>';
   var svg_open = '<svg fill="#555" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M10 4H2v16h20V6H12l-2-2z"/></svg>';
 
+  function _stopProp(e) { e.stopPropagation(); e.preventDefault(); }
+
   function _createGUI(self, arg) {
     self.gui = document.createElement('div');
     self.gui.style.display = 'inline-block';
@@ -137,15 +139,22 @@
       right -= step;
       self.openBtn.div.title = 'file';
       self.gui.appendChild(self.openBtn.div);
-      self.openBtn.off();
 
       self.fileInput = document.createElement('input');
       self.fileInput.type = 'file';
-      self.fileInput.style.display = 'none';
+      self.fileInput.style.position = 'absolute';
+      self.fileInput.style.top = '-1000px';
       self.fileInput.accept = '.mid, .midi, .kar, .rmi';
       self.gui.appendChild(self.fileInput);
 
-      self.openBtn.div.addEventListener('click', function() { self.fileInput.click(); });
+      if (window.FileReader) {
+        self.openBtn.off();
+        self.openBtn.div.addEventListener('click', function() { self.fileInput.click(); });
+        self.fileInput.addEventListener('change', function(e) { _stopProp(e); self.readFile(e.target.files[0]); });
+        self.gui.addEventListener('drop', function(e) { _stopProp(e); self.openBtn.off(); self.readFile(e.dataTransfer.files[0]); });
+        self.gui.addEventListener('dragover', function(e) { _stopProp(e); self.openBtn.on(); e.dataTransfer.dropEffect = 'copy'; });
+        self.gui.addEventListener('dragexit', function(e) { _stopProp(e); self.openBtn.off(); });
+      }
     }
     else self.openBtn = _noBtn;
 
@@ -366,6 +375,24 @@
         this.loopBtn.div.title = 'loop';
       }
     }
+  };
+
+  Player.prototype.readFile = function(f) {
+    var self = this;
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      var data = '';
+      var bytes = new Uint8Array(e.target.result);
+      for (var i = 0; i < bytes.length; i++) data += String.fromCharCode(bytes[i]);
+      try {
+        var smf = new JZZ.MIDI.SMF(data);
+        self.stop();
+        self.load(smf);
+        self.play();
+      }
+      catch (err) {}
+    };
+    reader.readAsArrayBuffer(f);
   };
 
   // selecting MIDI
