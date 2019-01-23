@@ -142,7 +142,7 @@
 
       self.fileInput = document.createElement('input');
       self.fileInput.type = 'file';
-      self.fileInput.style.position = 'absolute';
+      self.fileInput.style.position = 'fixed';
       self.fileInput.style.top = '-1000px';
       self.fileInput.accept = '.mid, .midi, .kar, .rmi';
       self.gui.appendChild(self.fileInput);
@@ -157,6 +157,22 @@
       }
     }
     else self.openBtn = _noBtn;
+
+    if (arg.close) {
+      self.closeBtn = document.createElement('div');
+      self.closeBtn.style.display = 'inline-block';
+      self.closeBtn.style.position = 'absolute';
+      self.closeBtn.style.top = '1px';
+      self.closeBtn.style.left = '263px';
+      self.closeBtn.style.margin = '0';
+      self.closeBtn.style.padding = '0';
+      self.closeBtn.style.backgroundColor = '#ccc';
+      self.closeBtn.style.width = '6px';
+      self.closeBtn.style.height = '6px';
+      self.closeBtn.title = 'close';
+      self.closeBtn.addEventListener('click', function() { self.close(); });
+      self.gui.appendChild(self.closeBtn);
+    }
 
     self.rlen = right - left + 10;
 
@@ -375,6 +391,10 @@
         this.loopBtn.div.title = 'loop';
       }
     }
+  };
+  Player.prototype.close = function(n) {
+    this.stop();
+    this.gui.parentNode.removeChild(this.gui);
   };
 
   Player.prototype.readFile = function(f) {
