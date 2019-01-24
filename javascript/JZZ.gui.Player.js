@@ -27,6 +27,8 @@
     this.div.style.borderWidth = '1px';
     this.div.style.borderColor = '#aaa';
     this.div.style.backgroundColor = '#888';
+    this.div.style.lineHeight = '0';
+    this.div.style.lineSpasing = '0';
     this.div.style.width = '18px';
     this.div.style.height = '18px';
     this.div.innerHTML = html;
@@ -52,6 +54,7 @@
   var svg_loop = '<svg fill="#555" height="18" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/></svg>';
   var svg_more = '<svg fill="#555" height="18" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 3v9.28c-.47-.17-.97-.28-1.5-.28C8.01 12 6 14.01 6 16.5S8.01 21 10.5 21c2.31 0 4.2-1.75 4.45-4H15V6h4V3h-7z"/></svg>';
   var svg_open = '<svg fill="#555" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M10 4H2v16h20V6H12l-2-2z"/></svg>';
+  var svg_close = '<svg stroke="#ff8" xmlns="http://www.w3.org/2000/svg" width="7" height="7" viewBox="0 0 7 7"><line x1="1" y1="1" x2="6" y2="6"/><line x1="1" y1="6" x2="6" y2="1"/></svg>';
 
   function _stopProp(e) { e.stopPropagation(); e.preventDefault(); }
 
@@ -163,12 +166,15 @@
       self.closeBtn.style.display = 'inline-block';
       self.closeBtn.style.position = 'absolute';
       self.closeBtn.style.top = '1px';
-      self.closeBtn.style.left = '263px';
+      self.closeBtn.style.left = '262px';
       self.closeBtn.style.margin = '0';
       self.closeBtn.style.padding = '0';
-      self.closeBtn.style.backgroundColor = '#ccc';
-      self.closeBtn.style.width = '6px';
-      self.closeBtn.style.height = '6px';
+      self.closeBtn.style.backgroundColor = '#f44';
+      self.closeBtn.style.width = '7px';
+      self.closeBtn.style.height = '7px';
+      self.closeBtn.style.lineHeight = '0';
+      self.closeBtn.style.lineSpasing = '0';
+      self.closeBtn.innerHTML = svg_close;
       self.closeBtn.title = 'close';
       self.closeBtn.addEventListener('click', function() { self.close(); });
       self.gui.appendChild(self.closeBtn);
