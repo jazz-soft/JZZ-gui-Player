@@ -40,7 +40,7 @@ kEB/GYBAQACQPn8ygD5AAJA+fzKAPkAAkEB/MoBAQACQPn8ygD5AAJA8f2RAZABDZABIf1qAPEAAQEAA
 Q0AASEAK/y8A';
 
 var smf = new JZZ.MIDI.SMF(JZZ.lib.fromBase64(data));
-var player = new JZZ.gui.Player('player');
+var player = new JZZ.gui.Player({ at: 'player', close: true });
 player.load(smf);
 player.play();
 

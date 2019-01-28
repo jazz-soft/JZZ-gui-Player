@@ -176,7 +176,7 @@
       self.closeBtn.style.lineSpasing = '0';
       self.closeBtn.innerHTML = svg_close;
       self.closeBtn.title = 'close';
-      self.closeBtn.addEventListener('click', function() { self.close(); });
+      self.closeBtn.addEventListener('click', function() { self.destroy(); });
       self.gui.appendChild(self.closeBtn);
     }
 
@@ -398,7 +398,7 @@
       }
     }
   };
-  Player.prototype.close = function(n) {
+  Player.prototype.destroy = function(n) {
     this.stop();
     this.gui.parentNode.removeChild(this.gui);
   };
