@@ -282,7 +282,7 @@
     this.pauseBtn.off();
     this.stopBtn.off();
     this.loopBtn.off();
-    if (!this._out) this.moreBtn.off();
+    if (!this._connector) this.moreBtn.off();
     this.rail.style.borderColor = '#ccc';
     this.caret.style.backgroundColor = '#aaa';
     this.caret.style.borderColor = '#ccc';
@@ -314,7 +314,7 @@
     }
   };
   Player.prototype._move = function() {
-    var off = Math.round(this._player.position() * this.rlen / this._player.duration()) - 5;
+    var off = Math.round(this._player.positionMS() * this.rlen / this._player.durationMS()) - 5;
     this.caret.style.left = off + 'px';
   };
   Player.prototype.play = function() {
@@ -477,10 +477,30 @@
   };
 
   Player.prototype.duration = function() { return this._player ? this._player.duration() : 0; };
+  Player.prototype.durationMS = function() { return this._player ? this._player.durationMS() : 0; };
   Player.prototype.position = function() { return this._player ? this._player.position() : 0; };
+  Player.prototype.positionMS = function() { return this._player ? this._player.positionMS() : 0; };
   Player.prototype.jump = function(pos) {
     if (this._player) {
       this._player.jump(pos);
+      this._move();
+      if (!this._playing) {
+        if (pos) {
+          this._paused = true;
+          this.playBtn.off();
+          this.pauseBtn.on();
+        }
+        else {
+          this._paused = false;
+          this.playBtn.off();
+          this.pauseBtn.off();
+        }
+      }
+    }
+  };
+  Player.prototype.jumpMS = function(pos) {
+    if (this._player) {
+      this._player.jumpMS(pos);
       this._move();
       if (!this._playing) {
         if (pos) {
@@ -540,9 +560,8 @@
       e.preventDefault();
       var to = this._caretPos + e.clientX - this._caretX;
       if (to < 0) to = 0;
-      //if (to > 100) to = 100;
       if (to > this.rlen) to = this.rlen;
-      this.jump(this.duration() * to * 1.0 / this.rlen);
+      this.jumpMS(this.durationMS() * to * 1.0 / this.rlen);
     }
     else if (typeof this._startX != 'undefined') {
       e.preventDefault();
