@@ -476,10 +476,14 @@
     if (e.keyCode == 13 || e.keyCode == 32) this._selected();
   };
 
+  Player.prototype.type = function() { return this._player ? this._player.type() : 0; };
+  Player.prototype.tracks = function() { return this._player ? this._player.tracks() : 0; };
   Player.prototype.duration = function() { return this._player ? this._player.duration() : 0; };
   Player.prototype.durationMS = function() { return this._player ? this._player.durationMS() : 0; };
   Player.prototype.position = function() { return this._player ? this._player.position() : 0; };
   Player.prototype.positionMS = function() { return this._player ? this._player.positionMS() : 0; };
+  Player.prototype.tick2ms = function() { return this._player ? this._player.tick2ms() : 0; };
+  Player.prototype.ms2tick = function() { return this._player ? this._player.ms2tick() : 0; };
   Player.prototype.jump = function(pos) {
     if (this._player) {
       this._player.jump(pos);
