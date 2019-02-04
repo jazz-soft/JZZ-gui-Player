@@ -319,6 +319,8 @@
     var off = Math.round(this._player.positionMS() * this.rlen / this._player.durationMS()) - 5;
     this.caret.style.left = off + 'px';
   };
+  Player.prototype.onPlay = function() {};
+  Player.prototype.onResume = function() {};
   Player.prototype.play = function() {
     if (this._player) {
       var self = this;
@@ -328,8 +330,14 @@
         if (this._playing) return;
         this._waiting = false;
         this._player.connect(this._out);
-        if (this._paused) this._player.resume();
-        else this._player.play();
+        if (this._paused) {
+          this._player.resume();
+          this.onResume();
+        }
+        else {
+          this._player.play();
+          this.onPlay();
+        }
         this._moving = setInterval(function() { self._move(); }, 100);
         this._playing = true;
         this._paused = false;
@@ -344,9 +352,12 @@
       }
     }
   };
+  Player.prototype.onStop = function() {};
   Player.prototype.stop = function() {
     if (this._player) {
+      var self = this;
       this._player.stop();
+      JZZ.lib.schedule(function() { self.onStop(); });
       if (this._moving) clearInterval(this._moving);
       this._playing = false;
       this._paused = false;
@@ -355,6 +366,7 @@
       this._move();
     }
   };
+  Player.prototype.onPause = function() {};
   Player.prototype.pause = function(p) {
     if (this._player) {
       var self = this;
@@ -362,6 +374,7 @@
         if (typeof p == 'undefined' || p) {
           if (this._out) {
             this._player.resume();
+            this.onResume();
             this._moving = setInterval(function() { self._move(); }, 100);
             this._playing = true;
             this._paused = false;
@@ -374,6 +387,7 @@
       else if (this._playing) {
         if (typeof p == 'undefined' || !p) {
           this._player.pause();
+          JZZ.lib.schedule(function() { self.onPause(); });
           if (this._moving) clearInterval(this._moving);
           this._playing = false;
           this._paused = true;
