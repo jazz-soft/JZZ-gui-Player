@@ -293,8 +293,10 @@
     if (this._out) this._player.connect(this._out);
     this._player.onEnd = function() { self._onEnd(); };
     this.enable();
+    this.onLoad(smf);
   };
   Player.prototype.onEnd = function() {};
+  Player.prototype.onLoad = function() {};
   Player.prototype._onEnd = function() {
     this.onEnd();
     if (this._loop && this._loop != -1) this._loop--;
@@ -413,8 +415,7 @@
       try {
         var smf = new JZZ.MIDI.SMF(data);
         self.stop();
-        self.load(smf);
-        self.play();
+        JZZ.lib.schedule(function() { self.load(smf); });
       }
       catch (err) {}
     };
@@ -484,6 +485,7 @@
   Player.prototype.positionMS = function() { return this._player ? this._player.positionMS() : 0; };
   Player.prototype.tick2ms = function() { return this._player ? this._player.tick2ms() : 0; };
   Player.prototype.ms2tick = function() { return this._player ? this._player.ms2tick() : 0; };
+  Player.prototype.onJump = function() {};
   Player.prototype.jump = function(pos) {
     if (this._player) {
       this._player.jump(pos);
@@ -500,6 +502,7 @@
           this.pauseBtn.off();
         }
       }
+      this.onJump(this._player.position());
     }
   };
   Player.prototype.jumpMS = function(pos) {
@@ -518,6 +521,7 @@
           this.pauseBtn.off();
         }
       }
+      this.onJump(this._player.position());
     }
   };
 
