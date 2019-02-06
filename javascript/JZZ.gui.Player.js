@@ -113,13 +113,13 @@
     }
     else self.loopBtn = _noBtn;
 
-    if (arg.more) {
-      self.moreBtn = new Btn(svg_more);
-      self.moreBtn.div.style.left = right + 'px';
+    if (arg.midi) {
+      self.midiBtn = new Btn(svg_more);
+      self.midiBtn.div.style.left = right + 'px';
       right -= step;
-      self.moreBtn.div.title = 'midi';
-      self.moreBtn.div.addEventListener('click', function() { self.settings(); });
-      self.gui.appendChild(self.moreBtn.div);
+      self.midiBtn.div.title = 'midi';
+      self.midiBtn.div.addEventListener('click', function() { self.settings(); });
+      self.gui.appendChild(self.midiBtn.div);
 
       self.select = document.createElement('select');
       self.select.style.position = 'absolute';
@@ -134,14 +134,14 @@
 
       self.gui.appendChild(self.select);
     }
-    else self.moreBtn = _noBtn;
+    else self.midiBtn = _noBtn;
 
-    if (arg.open) {
-      self.openBtn = new Btn(svg_open);
-      self.openBtn.div.style.left = right + 'px';
+    if (arg.file) {
+      self.fileBtn = new Btn(svg_open);
+      self.fileBtn.div.style.left = right + 'px';
       right -= step;
-      self.openBtn.div.title = 'file';
-      self.gui.appendChild(self.openBtn.div);
+      self.fileBtn.div.title = 'file';
+      self.gui.appendChild(self.fileBtn.div);
 
       self.fileInput = document.createElement('input');
       self.fileInput.type = 'file';
@@ -151,15 +151,15 @@
       self.gui.appendChild(self.fileInput);
 
       if (window.FileReader) {
-        self.openBtn.off();
-        self.openBtn.div.addEventListener('click', function() { self.fileInput.click(); });
+        self.fileBtn.off();
+        self.fileBtn.div.addEventListener('click', function() { self.fileInput.click(); });
         self.fileInput.addEventListener('change', function(e) { _stopProp(e); self.readFile(e.target.files[0]); });
-        self.gui.addEventListener('drop', function(e) { _stopProp(e); self.openBtn.off(); self.readFile(e.dataTransfer.files[0]); });
-        self.gui.addEventListener('dragover', function(e) { _stopProp(e); self.openBtn.on(); e.dataTransfer.dropEffect = 'copy'; });
-        self.gui.addEventListener('dragexit', function(e) { _stopProp(e); self.openBtn.off(); });
+        self.gui.addEventListener('drop', function(e) { _stopProp(e); self.fileBtn.off(); self.readFile(e.dataTransfer.files[0]); });
+        self.gui.addEventListener('dragover', function(e) { _stopProp(e); self.fileBtn.on(); e.dataTransfer.dropEffect = 'copy'; });
+        self.gui.addEventListener('dragexit', function(e) { _stopProp(e); self.fileBtn.off(); });
       }
     }
-    else self.openBtn = _noBtn;
+    else self.fileBtn = _noBtn;
 
     if (arg.close) {
       self.closeBtn = document.createElement('div');
@@ -229,15 +229,17 @@
       pause: true,
       stop: true,
       loop: true,
-      open: false,
-      more: true,
-      close: false
+      file: false,
+      midi: true,
+      close: false,
+      connect: true
     };
     for (var k in arg) if (arg.hasOwnProperty(k) && typeof x[k] != 'undefined') arg[k] = x[k];
     if (typeof arg.at == 'undefined') arg.at = x;
     if (typeof arg.x == 'undefined') arg.x = x;
     if (typeof arg.y == 'undefined') arg.y = y;
     _createGUI(this, arg);
+    this._conn = arg.connect;
 
     if (typeof arg.at == 'string') {
       try {
@@ -265,13 +267,16 @@
     this.gui.addEventListener('mousedown', function(e) { self._startmove(e); });
     document.body.appendChild(this.gui);
   }
+  Player.prototype = new JZZ.Widget();
+  Player.prototype.constructor = Player;
+
   Player.prototype.disable = function() {
     this.playBtn.disable();
     this.pauseBtn.disable();
     this.stopBtn.disable();
     this.loopBtn.disable();
-    this.moreBtn.disable();
-    this.openBtn.off();
+    this.midiBtn.disable();
+    this.fileBtn.off();
     this.rail.style.borderColor = '#aaa';
     this.rail.style.backgroundColor = '#888';
     this.caret.style.borderColor = '#aaa';
@@ -282,7 +287,7 @@
     this.pauseBtn.off();
     this.stopBtn.off();
     this.loopBtn.off();
-    if (!this._connector) this.moreBtn.off();
+    if (this._conn) this.midiBtn.off();
     this.rail.style.borderColor = '#ccc';
     this.caret.style.backgroundColor = '#aaa';
     this.caret.style.borderColor = '#ccc';
@@ -290,7 +295,7 @@
   Player.prototype.load = function(smf) {
     var self = this;
     this._player = smf.player();
-    if (this._out) this._player.connect(this._out);
+    this._player.connect(this);
     this._player.onEnd = function() { self._onEnd(); };
     this.enable();
     this.onLoad(smf);
@@ -326,10 +331,9 @@
       var self = this;
       this.playBtn.on();
       this.pauseBtn.off();
-      if (this._out) {
+      if (this._out || !this._conn) {
         if (this._playing) return;
         this._waiting = false;
-        this._player.connect(this._out);
         if (this._paused) {
           this._player.resume();
           this.onResume();
@@ -347,6 +351,7 @@
         JZZ().openMidiOut(undefined, /MIDI Through/i).and(function() {
           self._out = this;
           self._outname = this.name();
+          self._connect(this);
           self.play();
         });
       }
@@ -439,15 +444,15 @@
   // selecting MIDI
 
   Player.prototype._closeselect = function() {
-    this.moreBtn.off();
+    this.midiBtn.off();
     this.select.style.display = 'none';
     this._more = false;
   };
   Player.prototype.settings = function() {
-    if (!this._player || this._more || this._connector) return;
+    if (!this._player || this._more || !this._conn) return;
     var self = this;
     this._more = true;
-    this.moreBtn.on();
+    this.midiBtn.on();
     this.select.style.display = 'inline-block';
     JZZ().refresh().and(function() {
       var outs = this.info().outputs;
@@ -464,14 +469,14 @@
       self._newname = undefined;
       self._closeselect();
     }).and(function() {
-      if (self._connector) return;
       self._outname = self._newname;
       if (self._player) {
         self._player.sndOff();
         self._player.disconnect(self._out);
       }
+      if (self._out) self._disconnect(self._out);
       self._out = this;
-      if (self._player) self._player.connect(self._out);
+      self._connect(this);
       self._newname = undefined;
       self._closeselect();
     });
@@ -592,30 +597,26 @@
     }
   };
 
+  Player.prototype._connect = Player.prototype.connect;
+  Player.prototype._disconnect = Player.prototype.disconnect;
+
   Player.prototype.connect = function(port) {
-    if (!this._connector) {
-      this._connector = new JZZ.Widget();
-      if (this._player) {
-        if (this._playing) this._player.sndOff();
-        this._player.disconnect();
-        this._player.connect(this._connector);
-      }
-      this.moreBtn.disable();
-      this._out = this._connector;
+    if (port == this) {
+      this._conn = true;
+      if (this._player) this.midiBtn.off();
     }
-    this._connector.connect(port);
+    else {
+      this._connect(port);
+    }
   };
   Player.prototype.disconnect = function(port) {
-    if (this._connector) {
-      if (this._player && this._playing) this._player.sndOff();
-      this._connector.disconnect(port);
-      if (!this._connector.connected()) {
-        this.moreBtn.off();
-        this.select.style.display = 'none';
-        this._out = JZZ().openMidiOut(undefined, /MIDI Through/i);
-        if (this._player) this._player.connect(this._out);
-        this._connector = undefined;
-      }
+    if (port == this) {
+      this._conn = false;
+      if (this._out) this._disconnect(this._out);
+      if (this._player) this.midiBtn.disable();
+    }
+    else {
+      this._disconnect(port);
     }
   };
 
