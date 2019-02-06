@@ -470,11 +470,10 @@
       self._closeselect();
     }).and(function() {
       self._outname = self._newname;
-      if (self._player) {
-        self._player.sndOff();
-        self._player.disconnect(self._out);
+      if (self._out) {
+        if (this._playing) self._out.sndOff();
+        self._disconnect(self._out);
       }
-      if (self._out) self._disconnect(self._out);
       self._out = this;
       self._connect(this);
       self._newname = undefined;
