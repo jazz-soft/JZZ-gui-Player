@@ -471,7 +471,7 @@
     }).and(function() {
       self._outname = self._newname;
       if (self._out) {
-        if (this._playing) self._out.sndOff();
+        if (self._playing) for (var c = 0; c < 16; c++) self._out._receive(JZZ.MIDI.allSoundOff(c));
         self._disconnect(self._out);
       }
       self._out = this;

@@ -56,6 +56,8 @@ https://github.com/jazz-soft/polymer-midi-player
 
 ## Playing MIDI file
 
+Please check the [**API Reference**](https://jazz-soft.net/doc/JZZ/midiplayer.html) !
+
     <div id=player></div>
 
     <script><!--
