@@ -548,6 +548,7 @@
 
   Player.prototype._mousedown = function(e) {
     if (_lftBtnDn(e) && this._player) {
+      e.preventDefault();
       this.caret.style.backgroundColor = '#ddd';
       this._wasPlaying = this._playing;
       this._player.pause();
@@ -557,6 +558,7 @@
   };
   Player.prototype._startmove = function(e) {
     if (_lftBtnDn(e)) {
+      e.preventDefault();
       this._startX = parseInt(this.gui.style.left);
       this._startY = parseInt(this.gui.style.top);
       this._clickX = e.clientX;
