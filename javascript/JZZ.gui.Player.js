@@ -331,20 +331,14 @@
       var self = this;
       this.playBtn.on();
       this.pauseBtn.off();
+      if (this._playing) return;
+      if (this._paused) this.onResume();
+      else this.onPlay();
+      this._playing = true;
+      this._paused = false;
       if (this._out || !this._conn) {
-        if (this._playing) return;
-        this._waiting = false;
-        if (this._paused) {
-          this._player.resume();
-          this.onResume();
-        }
-        else {
-          this._player.play();
-          this.onPlay();
-        }
+        this._player.resume();
         this._moving = setInterval(function() { self._move(); }, 100);
-        this._playing = true;
-        this._paused = false;
       }
       else if (!this._waiting) {
         this._waiting = true;
@@ -352,7 +346,11 @@
           self._out = this;
           self._outname = this.name();
           self._connect(this);
-          self.play();
+          self._waiting = false;
+          if (self._playing) {
+            self._player.resume();
+            self._moving = setInterval(function() { self._move(); }, 100);
+          }
         });
       }
     }
