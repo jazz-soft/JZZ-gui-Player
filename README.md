@@ -6,7 +6,7 @@ MIDI Player GUI for browsers
 ![Chrome](http://jazz-soft.github.io/img/chrome.jpg)
 ![Opera](http://jazz-soft.github.io/img/opera.jpg)
 ![Safari](http://jazz-soft.github.io/img/safari.jpg)
-![Internet Explorer](http://jazz-soft.github.io/img/msie.jpg)  
+![Internet Explorer](http://jazz-soft.github.io/img/msie.jpg)
 ![Edge](http://jazz-soft.github.io/img/edge.jpg)  
 [![npm](https://img.shields.io/npm/v/jzz-gui-player.svg)](https://www.npmjs.com/package/jzz-gui-player)
 [![npm](https://img.shields.io/npm/dt/jzz-gui-player.svg)](https://www.npmjs.com/package/jzz-gui-player)
