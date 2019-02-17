@@ -144,7 +144,6 @@
       self.linkBtn.div.title = 'link';
       self.gui.appendChild(self.linkBtn.div);
     }
-    else self.fileBtn = _noBtn;
 
     if (arg.file) {
       self.fileBtn = new Btn(svg_open);
@@ -430,7 +429,30 @@
   };
   Player.prototype.destroy = function(n) {
     this.stop();
+    if (this._out) this._out.close();
     this.gui.parentNode.removeChild(this.gui);
+  };
+
+  Player.prototype.setUrl = function(url) {
+    if (this.linkBtn) {
+      if (typeof url == 'undefined') {
+        if (this._url) {
+          this.linkBtn.div.appendChild(this._url.firstChild);
+          this.linkBtn.div.removeChild(this._url);
+          this.linkBtn.disable();
+          this._url = undefined;
+        }
+      }
+      else {
+        if (!this._url) {
+          this.linkBtn.off();
+          this._url = document.createElement('a');
+          this._url.appendChild(this.linkBtn.div.firstChild);
+          this.linkBtn.div.appendChild(this._url);
+        }
+        this._url.href = url;
+      }
+    }
   };
 
   Player.prototype.readFile = function(f) {
@@ -482,6 +504,7 @@
       if (self._out) {
         if (self._playing) for (var c = 0; c < 16; c++) self._out._receive(JZZ.MIDI.allSoundOff(c));
         self._disconnect(self._out);
+        self._out.close();
       }
       self._out = this;
       self._connect(this);
