@@ -433,24 +433,22 @@
     this.gui.parentNode.removeChild(this.gui);
   };
 
-  Player.prototype.setUrl = function(url) {
+  Player.prototype.setUrl = function(url, name) {
     if (this.linkBtn) {
-      if (typeof url == 'undefined') {
-        if (this._url) {
-          this.linkBtn.div.appendChild(this._url.firstChild);
-          this.linkBtn.div.removeChild(this._url);
-          this.linkBtn.disable();
-          this._url = undefined;
-        }
+      if (this._url) {
+        this.linkBtn.div.appendChild(this._url.firstChild);
+        this.linkBtn.div.removeChild(this._url);
+        this._url = undefined;
       }
+      if (typeof url == 'undefined') this.linkBtn.disable();
       else {
-        if (!this._url) {
-          this.linkBtn.off();
-          this._url = document.createElement('a');
-          this._url.appendChild(this.linkBtn.div.firstChild);
-          this.linkBtn.div.appendChild(this._url);
-        }
+        this.linkBtn.off();
+        this._url = document.createElement('a');
+        this._url.target = '_blank';
+        this._url.appendChild(this.linkBtn.div.firstChild);
+        this.linkBtn.div.appendChild(this._url);
         this._url.href = url;
+        if (typeof name != 'undefined') this._url.download = name;
       }
     }
   };
@@ -466,6 +464,7 @@
         var smf = new JZZ.MIDI.SMF(data);
         self.stop();
         JZZ.lib.schedule(function() { self.load(smf); });
+        if (self.linkBtn) self.setUrl('data:audio/midi;base64,' + JZZ.lib.toBase64(data), f.name);
       }
       catch (err) {}
     };
