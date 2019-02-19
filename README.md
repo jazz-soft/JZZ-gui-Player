@@ -11,7 +11,7 @@ MIDI Player GUI for browsers
 [![npm](https://img.shields.io/npm/v/jzz-gui-player.svg)](https://www.npmjs.com/package/jzz-gui-player)
 [![npm](https://img.shields.io/npm/dt/jzz-gui-player.svg)](https://www.npmjs.com/package/jzz-gui-player)
 
-![MIDI Player](https://jazz-soft.github.io/img/jzzguiplayer.png)
+[![MIDI Player](https://jazz-soft.github.io/img/midi-player.png)](https://jazz-soft.net/doc/JZZ/midiplayer.html)
 
 See the [**demo**](https://jazz-soft.github.io/modules/smf/index.html)...
 
