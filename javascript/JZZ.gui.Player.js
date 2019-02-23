@@ -427,9 +427,12 @@
       }
     }
   };
-  Player.prototype.destroy = function(n) {
+  Player.prototype.destroy = function() {
     this.stop();
-    if (this._out) this._out.close();
+    if (this._out) {
+      var out = this._out;
+      JZZ.lib.schedule(function() { out.close(); });
+    }
     this.gui.parentNode.removeChild(this.gui);
   };
 
