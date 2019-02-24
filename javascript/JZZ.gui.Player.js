@@ -265,13 +265,13 @@
     catch(e) {}
 
     if (arg.x != parseInt(arg.x) || arg.y != parseInt(arg.y)) {
-      arg.x = _floating * 45 + 5;
-      arg.y = _floating * 15 + 5;
+      arg.x = _floating * 15 + 5;
+      arg.y = _floating * 45 + 5;
       _floating++;
     }
     this.gui.style.position = 'fixed';
-    this.gui.style.top = arg.x + 'px';
-    this.gui.style.left = arg.y + 'px';
+    this.gui.style.top = arg.y + 'px';
+    this.gui.style.left = arg.x + 'px';
     this.gui.style.opacity = 0.9;
     var self = this;
     this.gui.addEventListener('mousedown', function(e) { self._startmove(e); });
