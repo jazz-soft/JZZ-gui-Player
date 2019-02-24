@@ -427,6 +427,7 @@
       }
     }
   };
+  Player.prototype.onClose = function() {};
   Player.prototype.destroy = function() {
     this.stop();
     if (this._out) {
@@ -434,6 +435,7 @@
       JZZ.lib.schedule(function() { out.close(); });
     }
     this.gui.parentNode.removeChild(this.gui);
+    this.onClose();
   };
 
   Player.prototype.setUrl = function(url, name) {
@@ -451,6 +453,8 @@
         this._url.appendChild(this.linkBtn.div.firstChild);
         this.linkBtn.div.appendChild(this._url);
         this._url.href = url;
+        if (!this._url.dataset) this._url.dataset = {};
+        this._url.dataset.jzzGuiPlayer = true;
         if (typeof name != 'undefined') this._url.download = name;
       }
     }
