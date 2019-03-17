@@ -5,7 +5,6 @@
 <script src="node_modules/jzz/javascript/JZZ.js"></script>
 <script src="node_modules/jzz-midi-smf/javascript/JZZ.midi.SMF.js"></script>
 <script src="node_modules/jzz-synth-tiny/javascript/JZZ.synth.Tiny.js"></script>
-<script src="node_modules/jzz-synth-osc/javascript/JZZ.synth.OSC.js"></script>
 <script src="javascript/JZZ.gui.Player.js"></script>
 </head>
 
@@ -22,8 +21,7 @@ or <a target=_blank href=https://addons.mozilla.org/en-US/firefox/addon/jazz-mid
 
 <script><!--
 document.getElementById('player').innerHTML = 'Please run <tt style="background-color:#bbf;"><b>npm install</b></tt> to enable this test.';
-JZZ.synth.Tiny.register('Web Audio 1');
-JZZ.synth.OSC.register('Web Audio 2');
+JZZ.synth.Tiny.register('Web Audio');
 document.getElementById('player').innerHTML = '';
 document.getElementById('note').style.display = 'block';
 
