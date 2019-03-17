@@ -357,7 +357,7 @@
       }
       else if (!this._waiting) {
         this._waiting = true;
-        JZZ().openMidiOut([/^((?!Midi Through).)*$/i, /MIDI Through/i]).and(function() {
+        JZZ().openMidiOut([undefined, /MIDI Through/i]).and(function() {
           self._out = this;
           self._outname = this.name();
           self._connect(this);
