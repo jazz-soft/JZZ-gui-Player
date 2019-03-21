@@ -124,18 +124,18 @@
       self.midiBtn.div.addEventListener('click', function() { self.settings(); });
       self.gui.appendChild(self.midiBtn.div);
 
-      self.select = document.createElement('select');
-      self.select.style.position = 'absolute';
-      self.select.style.top = '30px';
-      self.select.style.left = '40px';
-      self.select.style.width = '230px';
-      self.select.style.display = 'none';
-      self.select.style.zIndex = 1;
-      self.select.addEventListener('click', function() { self._selected(); });
-      self.select.addEventListener('keydown', function(e) { self._keydown(e); });
-      self.select.addEventListener('focusout', function() { self._closeselect(); });
+      self.sel = document.createElement('select');
+      self.sel.style.position = 'absolute';
+      self.sel.style.top = '30px';
+      self.sel.style.left = '40px';
+      self.sel.style.width = '230px';
+      self.sel.style.display = 'none';
+      self.sel.style.zIndex = 1;
+      self.sel.addEventListener('click', function() { self._selected(); });
+      self.sel.addEventListener('keydown', function(e) { self._keydown(e); });
+      self.sel.addEventListener('focusout', function() { self._closeselect(); });
 
-      self.gui.appendChild(self.select);
+      self.gui.appendChild(self.sel);
     }
     else self.midiBtn = _noBtn;
 
@@ -485,9 +485,10 @@
 
   // selecting MIDI
 
+  Player.prototype.onSelect = function() {};
   Player.prototype._closeselect = function() {
     this.midiBtn.off();
-    this.select.style.display = 'none';
+    this.sel.style.display = 'none';
     this._more = false;
   };
   Player.prototype.settings = function() {
@@ -495,14 +496,14 @@
     var self = this;
     this._more = true;
     this.midiBtn.on();
-    this.select.style.display = 'inline-block';
+    this.sel.style.display = 'inline-block';
     JZZ().refresh().and(function() {
       var outs = this.info().outputs;
       var i;
-      for (i = 0; i < self.select.options.length; i++) self.select.remove(i);
-      for (i = 0; i < outs.length; i++) self.select[i] = new Option(outs[i].name, outs[i].name, outs[i].name == self._outname, outs[i].name == self._outname);
-      self.select.size = outs.length < 2 ? 2 : outs.length;
-      self.select.focus();
+      for (i = 0; i < self.sel.options.length; i++) self.sel.remove(i);
+      for (i = 0; i < outs.length; i++) self.sel[i] = new Option(outs[i].name, outs[i].name, outs[i].name == self._outname, outs[i].name == self._outname);
+      self.sel.size = outs.length < 2 ? 2 : outs.length;
+      self.sel.focus();
     });
   };
   Player.prototype._selectMidi = function() {
@@ -521,18 +522,22 @@
       self._connect(this);
       self._newname = undefined;
       self._closeselect();
+      setTimeout(function() { self.onSelect(self._outname); }, 0);
     });
   };
-  Player.prototype._selected = function() {
+  Player.prototype.select = function(name) {
     var self = this;
-    this._newname = this.select.options[this.select.selectedIndex].value;
+    this._newname = name;
     if (this._newname == this._outname) {
       this._newname = undefined;
-      self._closeselect();
+      this._closeselect();
     }
     else {
       setTimeout(function() { self._selectMidi(); }, 0);
     }
+  };
+  Player.prototype._selected = function() {
+    this.select(this.sel.options[this.sel.selectedIndex].value);
   };
   Player.prototype._keydown = function(e) {
     if (e.keyCode == 13 || e.keyCode == 32) this._selected();
