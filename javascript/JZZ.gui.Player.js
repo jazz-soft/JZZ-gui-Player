@@ -522,6 +522,7 @@
       self._connect(this);
       self._newname = undefined;
       self._closeselect();
+      self.midiBtn.div.title = self._outname;
       setTimeout(function() { self.onSelect(self._outname); }, 0);
     });
   };
