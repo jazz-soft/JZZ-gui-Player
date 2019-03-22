@@ -14,7 +14,7 @@
   if (JZZ.gui.Player) return;
 
   function empty() {}
-  var _noBtn = { on: empty, off: empty, disable: empty, div: {} };
+  var _noBtn = { on: empty, off: empty, disable: empty, title: empty, div: {} };
 
   function Btn(html) {
     this.div = document.createElement('div');
@@ -49,6 +49,7 @@
     this.div.style.borderColor = '#aaa';
     this.div.firstChild.style.fill = '#555';
   };
+  Btn.prototype.title = function(s) { this.div.title = s; };
   var svg_play = '<svg fill="#555" height="18" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg"><path d="M8 5v14l11-7z"/><path d="M0 0h24v24H0z" fill="none"/></svg>';
   var svg_pause = '<svg fill="#555" height="18" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>';
   var svg_stop = '<svg fill="#555" height="18" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"/><path d="M6 6h12v12H6z"/></svg>';
@@ -330,9 +331,9 @@
       if (this._loop == 1) {
         this._loop = 0;
         this.loopBtn.off();
-        this.loopBtn.div.title = 'loop';
+        this.loopBtn.title('loop');
       }
-      else this.loopBtn.div.title = 'loop: ' + (this._loop == -1 ? '\u221e' : this._loop);
+      else this.loopBtn.title('loop: ' + (this._loop == -1 ? '\u221e' : this._loop));
     }
   };
   Player.prototype._move = function() {
@@ -360,6 +361,7 @@
         JZZ().openMidiOut([undefined, /MIDI Through/i]).and(function() {
           self._out = this;
           self._outname = this.name();
+          self.midiBtn.title(self._outname);
           self._connect(this);
           self._waiting = false;
           if (self._playing) {
@@ -424,11 +426,11 @@
       this._player.loop(this._loop);
       if (this._loop) {
         this.loopBtn.on();
-        this.loopBtn.div.title = 'loop: ' + (this._loop == -1 ? '\u221e' : this._loop);
+        this.loopBtn.title('loop: ' + (this._loop == -1 ? '\u221e' : this._loop));
       }
       else {
         this.loopBtn.off();
-        this.loopBtn.div.title = 'loop';
+        this.loopBtn.title('loop');
       }
     }
   };
@@ -522,7 +524,7 @@
       self._connect(this);
       self._newname = undefined;
       self._closeselect();
-      self.midiBtn.div.title = self._outname;
+      self.midiBtn.title(self._outname);
       setTimeout(function() { self.onSelect(self._outname); }, 0);
     });
   };
