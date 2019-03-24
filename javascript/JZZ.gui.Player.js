@@ -248,6 +248,7 @@
       link: false,
       midi: true,
       close: false,
+      ports: [undefined, /MIDI Through/i],
       connect: true
     };
     if (typeof x == 'object') for (var k in arg) if (arg.hasOwnProperty(k) && typeof x[k] != 'undefined') arg[k] = x[k];
@@ -255,6 +256,9 @@
     if (typeof arg.x == 'undefined') arg.x = x;
     if (typeof arg.y == 'undefined') arg.y = y;
     _createGUI(this, arg);
+    if (!(arg.ports instanceof Array)) arg.ports = [arg.ports];
+    arg.ports.push(undefined);
+    this._ports = arg.ports;
     this._conn = arg.connect;
 
     if (typeof arg.at == 'string') {
@@ -358,7 +362,7 @@
       }
       else if (!this._waiting) {
         this._waiting = true;
-        JZZ().openMidiOut([undefined, /MIDI Through/i]).and(function() {
+        JZZ().openMidiOut(self._ports).and(function() {
           self._out = this;
           self._outname = this.name();
           self.midiBtn.title(self._outname);
