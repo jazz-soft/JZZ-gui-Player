@@ -484,7 +484,7 @@
         JZZ.lib.schedule(function() { self.load(smf); });
         if (self.linkBtn) self.setUrl('data:audio/midi;base64,' + JZZ.lib.toBase64(data), f.name);
       }
-      catch (err) {}
+      catch (err) { console.log(err.message); }
     };
     reader.readAsArrayBuffer(f);
   };
