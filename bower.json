@@ -12,8 +12,9 @@
   ],
   "license": "MIT",
   "keywords": [
-    "MIDI",
     "midi",
+    "midi-file",
+    "midi-player",
     "player"
   ],
   "homepage": "https://github.com/jazz-soft/JZZ-gui-Player",
@@ -27,6 +28,6 @@
   ],
   "dependencies": {
     "jzz": "^0.7.4",
-    "jzz-midi-smf": "^1.1.8"
+    "jzz-midi-smf": "^1.2.0"
   }
 }
