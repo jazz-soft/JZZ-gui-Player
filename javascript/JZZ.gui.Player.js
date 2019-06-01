@@ -515,7 +515,7 @@
   };
   Player.prototype._selectMidi = function() {
     var self = this;
-    var port = JZZ().openMidiOut(this._newname).or(function() {
+    JZZ().openMidiOut(this._newname).or(function() {
       self._newname = undefined;
       self._closeselect();
     }).and(function() {
@@ -621,7 +621,7 @@
       this._clickY = e.clientY;
     }
   };
-  Player.prototype._mouseup = function(e) {
+  Player.prototype._mouseup = function() {
     if (this._player) {
       if (typeof this._caretX != 'undefined') {
         if (this._wasPlaying) {
