@@ -4,7 +4,9 @@
   "description": "MIDI Player GUI for browsers",
   "main": "javascript/JZZ.gui.Player.js",
   "scripts": {
-    "lint": "eslint javascript"
+    "test": "nyc mocha",
+    "lint": "eslint javascript test",
+    "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "keywords": [
     "midi",
@@ -14,15 +16,20 @@
   ],
   "author": "jazz-soft (https://jazz-soft.net/)",
   "dependencies": {
-    "jzz": "^0.8.1",
+    "jzz": "^0.8.5",
     "jzz-midi-smf": "^1.2.4"
   },
   "devDependencies": {
-    "eslint": "^5.16.0",
+    "coveralls": "^3.0.5",
+    "eslint": "^6.0.1",
     "grunt": "^1.0.4",
     "grunt-contrib-jshint": "^2.1.0",
     "grunt-contrib-uglify": "^4.0.1",
-    "jzz-synth-tiny": "^1.1.1"
+    "jsdom": "^15.1.1",
+    "jzz-synth-tiny": "^1.1.1",
+    "mocha": "^6.2.0",
+    "nyc": "^14.1.1",
+    "web-midi-test": "^1.0.1"
   },
   "repository": {
     "type": "git",

@@ -8,12 +8,28 @@ module.exports = {
   "parserOptions": {
     "ecmaVersion": 5
   },
-  "globals": {
-    "JZZ": "readonly",
-    "define": "readonly"
-  },
-  "rules": {
-    "no-console" : "off",
-    "no-empty" : ["warn", { "allowEmptyCatch": true }]
-  }
+  "overrides": [
+    {
+      "files": ["test/*"],
+      "globals": {
+        "describe": "readonly",
+        "it": "readonly"
+      },
+      "rules": {
+        "no-console" : "off"
+      }
+    },
+    {
+      "files": ["javascript/*"],
+      "globals": {
+        "JZZ": "readonly",
+        "define": "readonly"
+      },
+      "rules": {
+        "no-console" : "off",
+        "no-empty" : ["warn", { "allowEmptyCatch": true }],
+        "no-prototype-builtins" : "off"
+      }
+    }
+  ]
 };
