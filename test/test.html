@@ -4,7 +4,7 @@
 <title>MIDI Player Test</title>
 <script src="../node_modules/jzz/javascript/JZZ.js"></script>
 <script src="../node_modules/jzz-midi-smf/javascript/JZZ.midi.SMF.js"></script>
-<script src="../javascript/JZZ.gui.Player.js"></script>
+<script src=".instrumented/JZZ.gui.Player.js"></script>
 </head>
 
 <body>
@@ -29,7 +29,7 @@ Q0AASEAK/y8A';
 
 var smf = new JZZ.MIDI.SMF(JZZ.lib.fromBase64(data));
 var player = new JZZ.gui.Player({ at: 'player', file: true });
-player.onLoad = function() { player.play(); };
+//player.onLoad = function() { player.play(); };
 player.load(smf);
 
 --></script>

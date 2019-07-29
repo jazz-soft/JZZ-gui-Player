@@ -4,7 +4,7 @@
   "description": "MIDI Player GUI for browsers",
   "main": "javascript/JZZ.gui.Player.js",
   "scripts": {
-    "test": "nyc mocha",
+    "test": "nyc instrument ./javascript ./test/.instrumented && nyc mocha",
     "lint": "eslint javascript test",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
@@ -17,11 +17,11 @@
   "author": "jazz-soft (https://jazz-soft.net/)",
   "dependencies": {
     "jzz": "^0.8.5",
-    "jzz-midi-smf": "^1.2.4"
+    "jzz-midi-smf": "^1.2.5"
   },
   "devDependencies": {
     "coveralls": "^3.0.5",
-    "eslint": "^6.0.1",
+    "eslint": "^6.1.0",
     "grunt": "^1.0.4",
     "grunt-contrib-jshint": "^2.1.0",
     "grunt-contrib-uglify": "^4.0.1",

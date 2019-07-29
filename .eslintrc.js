@@ -12,6 +12,8 @@ module.exports = {
     {
       "files": ["test/*"],
       "globals": {
+        "before": "readonly",
+        "after": "readonly",
         "describe": "readonly",
         "it": "readonly"
       },
