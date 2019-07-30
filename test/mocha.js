@@ -25,8 +25,7 @@ describe('functions', function() {
       });
 
     });
-  })
-;
+  });
   it('seems to work...', function() {
     assert.equal(0, 0);
   });
