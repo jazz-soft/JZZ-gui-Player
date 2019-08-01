@@ -29,7 +29,7 @@ Q0AASEAK/y8A';
 
 var smf = new JZZ.MIDI.SMF(JZZ.lib.fromBase64(data));
 var player = new JZZ.gui.Player({ at: 'player', file: true });
-//player.onLoad = function() { player.play(); };
+player.onLoad = function() { player.speed(20); player.play(); };
 player.load(smf);
 
 --></script>

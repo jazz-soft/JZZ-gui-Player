@@ -7,7 +7,7 @@ midi_out.connect();
 
 global.__coverage__ = {};
 
-describe('functions', function() {
+describe('In browser', function() {
   before(function() {
     return new Promise(function(resolve) {
       JSDOM.fromFile('test/test.html', {
@@ -18,15 +18,12 @@ describe('functions', function() {
           window.navigator.requestMIDIAccess = WMT.requestMIDIAccess;
         }
       }).then(function(dom) {
-
         global.window = dom.window;
-
-        setTimeout(resolve, 500);
+        setTimeout(resolve, 1500);
       });
-
     });
   });
-  it('seems to work...', function() {
+  it('it works!', function() {
     assert.equal(0, 0);
   });
 });

@@ -12,6 +12,11 @@
 
 <h1>MIDI Player Test</h1>
 <p id=player>Please enable JavaScript!</p>
+<p id=buttons style='display:none;'>
+<button onclick='speed(0.5);'>Tempo: 50%</button>
+<button onclick='speed(1);'>Tempo: 100%</button>
+<button onclick='speed(2);'>Tempo: 200%</button>
+</p>
 <p id=note style='display:none;'>
 <em>NOTE:</em> For better sound quality, you may want to install the
 <a target=_blank href=http://jazz-soft.net>Jazz-Plugin</a> and browser extension from
@@ -23,6 +28,7 @@ or <a target=_blank href=https://addons.mozilla.org/en-US/firefox/addon/jazz-mid
 document.getElementById('player').innerHTML = 'Please run <tt style="background-color:#bbf;"><b>npm install</b></tt> to enable this test.';
 JZZ.synth.Tiny.register('Web Audio');
 document.getElementById('player').innerHTML = '';
+document.getElementById('buttons').style.display = 'block';
 document.getElementById('note').style.display = 'block';
 
 var data='\
@@ -42,6 +48,7 @@ var player = new JZZ.gui.Player({ at: 'player', file: true });
 player.onLoad = function() { player.play(); };
 player.load(smf);
 
+function speed(x) { player.speed(x); }
 --></script>
 
 </body>

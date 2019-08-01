@@ -17,7 +17,7 @@
   "author": "jazz-soft (https://jazz-soft.net/)",
   "dependencies": {
     "jzz": "^0.8.5",
-    "jzz-midi-smf": "^1.2.6"
+    "jzz-midi-smf": "^1.2.7"
   },
   "devDependencies": {
     "coveralls": "^3.0.5",
