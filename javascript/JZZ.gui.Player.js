@@ -347,7 +347,7 @@
   };
   Player.prototype.onPlay = function() {};
   Player.prototype.onResume = function() {};
-  Player.prototype.resume = function() {
+  Player.prototype._resume = function() {
     var self = this;
     this._player.resume();
     this._moving = setInterval(function() { self._move(); }, 100);
@@ -363,7 +363,7 @@
       this._playing = true;
       this._paused = false;
       if (this._out || !this._conn) {
-        this.resume();
+        this._resume();
       }
       else if (!this._waiting) {
         this._waiting = true;
@@ -374,11 +374,11 @@
           self._connect(this);
           self._waiting = false;
           if (self._playing) {
-            self.resume();
+            self._resume();
           }
         }).or(function() {
           self._waiting = false;
-          self.resume();
+          self._resume();
         });
       }
     }
@@ -403,7 +403,7 @@
       if (this._paused) {
         if (typeof p == 'undefined' || p) {
           if (this._out) {
-            this.resume();
+            this._resume();
             this.onResume();
             this._playing = true;
             this._paused = false;
