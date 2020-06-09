@@ -37,11 +37,18 @@ https://github.com/jazz-soft/polymer-midi-player
     <script src="JZZ.gui.Player.js"></script>
     //...
 
-##### CDN (always the latest version!)
+##### CDN (jsdelivr)
 
     <script src="https://cdn.jsdelivr.net/npm/jzz"></script>
     <script src="https://cdn.jsdelivr.net/npm/jzz-midi-smf"></script>
     <script src="https://cdn.jsdelivr.net/npm/jzz-gui-player"></script>
+    //...
+
+##### CDN (unpkg)
+
+    <script src="https://unpkg.com/jzz"></script>
+    <script src="https://unpkg.com/jzz-midi-smf"></script>
+    <script src="https://unpkg.com/jzz-gui-player"></script>
     //...
 
 ##### CommonJS
