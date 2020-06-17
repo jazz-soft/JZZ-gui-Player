@@ -318,8 +318,13 @@
     this._player.trim();
     this._player.connect(this);
     this._player.onEnd = function() { self._onEnd(); };
+    this._player.filter(this._setfilter);
     this.enable();
     this.onLoad(smf);
+  };
+  Player.prototype.filter = function(f) {
+    this._setfilter = f instanceof Function ? f : undefined;
+    if (this._player) this._player.filter(this._setfilter);
   };
   Player.prototype.onEnd = function() {};
   Player.prototype.onLoad = function() {};
