@@ -422,6 +422,7 @@
   Player.prototype.onPause = function() {};
   Player.prototype.pause = function(p) {
     if (this._player) {
+      var self = this;
       if (this._paused) {
         if (typeof p == 'undefined' || p) {
           if (this._out) {
