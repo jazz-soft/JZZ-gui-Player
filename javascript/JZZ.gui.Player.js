@@ -572,7 +572,8 @@
     }
   };
   Player.prototype._selected = function() {
-    this.select(this.sel.options[this.sel.selectedIndex].value);
+    var selected = this.sel.options[this.sel.selectedIndex];
+    if (selected) this.select(selected.value);
   };
   Player.prototype._keydown = function(e) {
     if (e.keyCode == 13 || e.keyCode == 32) this._selected();
