@@ -1,6 +1,6 @@
 {
   "name": "jzz-gui-player",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "description": "MIDI Player GUI for browsers",
   "main": "javascript/JZZ.gui.Player.js",
   "scripts": {
@@ -26,7 +26,7 @@
     "grunt-contrib-jshint": "^2.1.0",
     "grunt-contrib-uglify": "^4.0.1",
     "jsdom": "^16.2.2",
-    "jzz-synth-tiny": "^1.1.6",
+    "jzz-synth-tiny": "^1.1.7",
     "mocha": "^8.0.1",
     "nyc": "^15.1.0",
     "web-midi-test": "^1.0.9"
