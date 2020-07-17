@@ -22,10 +22,10 @@
   "devDependencies": {
     "coveralls": "^3.1.0",
     "eslint": "^7.4.0",
-    "grunt": "^1.2.0",
+    "grunt": "^1.2.1",
     "grunt-contrib-jshint": "^2.1.0",
     "grunt-contrib-uglify": "^4.0.1",
-    "jsdom": "^16.2.2",
+    "jsdom": "^16.3.0",
     "jzz-synth-tiny": "^1.1.7",
     "mocha": "^8.0.1",
     "nyc": "^15.1.0",
