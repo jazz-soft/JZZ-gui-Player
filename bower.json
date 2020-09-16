@@ -28,6 +28,6 @@
   ],
   "dependencies": {
     "jzz": "^1.0.9",
-    "jzz-midi-smf": "^1.3.9"
+    "jzz-midi-smf": "^1.4.0"
   }
 }
