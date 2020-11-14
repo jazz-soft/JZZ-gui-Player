@@ -274,6 +274,7 @@
     arg.ports.push(undefined);
     this._ports = arg.ports;
     this._conn = arg.connect;
+    this.disable();
 
     if (typeof arg.at == 'string') {
       try {
@@ -313,6 +314,7 @@
     this.stopBtn.disable();
     this.loopBtn.disable();
     this.midiBtn.disable();
+    if (this._conn) this.midiBtn.off();
     this.fileBtn.off();
     this.rail.style.borderColor = '#aaa';
     this.rail.style.backgroundColor = '#888';
@@ -526,7 +528,7 @@
     this._more = false;
   };
   Player.prototype.settings = function() {
-    if (!this._player || this._more || !this._conn) return;
+    if (this._more || !this._conn) return;
     var self = this;
     this._more = true;
     this.midiBtn.on();
@@ -696,7 +698,7 @@
   Player.prototype.connect = function(port) {
     if (port == this) {
       this._conn = true;
-      if (this._player) this.midiBtn.off();
+      this.midiBtn.off();
     }
     else {
       this._connect(port);
@@ -706,12 +708,14 @@
     if (port == this) {
       this._conn = false;
       if (this._out) this._disconnect(this._out);
-      if (this._player) this.midiBtn.disable();
+      this._outname = undefined;
+      this.midiBtn.disable();
     }
     else {
       this._disconnect(port);
     }
   };
+  Player.prototype.connected = function() { return this._outname; };
 
   JZZ.gui.Player = Player;
 });

@@ -2,12 +2,12 @@
 
 MIDI Player GUI for browsers
 
-![Firefox](http://jazz-soft.github.io/img/firefox.jpg)
-![Chrome](http://jazz-soft.github.io/img/chrome.jpg)
-![Opera](http://jazz-soft.github.io/img/opera.jpg)
-![Safari](http://jazz-soft.github.io/img/safari.jpg)
-![Internet Explorer](http://jazz-soft.github.io/img/msie.jpg)
-![Edge](http://jazz-soft.github.io/img/edgc.jpg)  
+![Firefox](https://jazz-soft.github.io/img/firefox.jpg)
+![Chrome](https://jazz-soft.github.io/img/chrome.jpg)
+![Opera](https://jazz-soft.github.io/img/opera.jpg)
+![Safari](https://jazz-soft.github.io/img/safari.jpg)
+![Internet Explorer](https://jazz-soft.github.io/img/msie.jpg)
+![Edge](https://jazz-soft.github.io/img/edgc.jpg)  
 [![npm](https://img.shields.io/npm/v/jzz-gui-player.svg)](https://www.npmjs.com/package/jzz-gui-player)
 [![npm](https://img.shields.io/npm/dt/jzz-gui-player.svg)](https://www.npmjs.com/package/jzz-gui-player)
 [![Build Status](https://travis-ci.com/jazz-soft/JZZ-gui-Player.svg?branch=master)](https://travis-ci.com/jazz-soft/JZZ-gui-Player)
