@@ -12,6 +12,7 @@ MIDI Player GUI for browsers
 [![npm](https://img.shields.io/npm/dt/jzz-gui-player.svg)](https://www.npmjs.com/package/jzz-gui-player)
 [![Build Status](https://travis-ci.com/jazz-soft/JZZ-gui-Player.svg?branch=master)](https://travis-ci.com/jazz-soft/JZZ-gui-Player)
 [![Coverage Status](https://coveralls.io/repos/github/jazz-soft/JZZ-gui-Player/badge.svg?branch=master)](https://coveralls.io/github/jazz-soft/JZZ-gui-Player?branch=master)
+[![Try jzz-gui-player on RunKit](https://badge.runkitcdn.com/jzz-gui-player.svg)](https://npm.runkit.com/jzz-gui-player)
 
 [![MIDI Player](https://jazz-soft.github.io/img/midi-player.png)](https://jazz-soft.net/doc/JZZ/midiplayer.html)
 
