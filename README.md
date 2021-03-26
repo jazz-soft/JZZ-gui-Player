@@ -93,6 +93,3 @@ Please check the [**API Reference**](https://jazz-soft.net/doc/JZZ/midiplayer.ht
 ## More information
 
 Please visit [**https://jazz-soft.net**](https://jazz-soft.net) for more information.  
-Your questions and comments are welcome [**here**](https://jazz-soft.org).
-
-We would really appreciate your [**support**](https://jazz-soft.net/donate)!
