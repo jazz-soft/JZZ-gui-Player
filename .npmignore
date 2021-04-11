@@ -1,5 +1,6 @@
 minified
 test*
 .*
+coverage
 bower.json
 Gruntfile.js

@@ -27,7 +27,7 @@
     "Gruntfile.js"
   ],
   "dependencies": {
-    "jzz": "^1.2.6",
-    "jzz-midi-smf": "^1.4.9"
+    "jzz": "^1.2.8",
+    "jzz-midi-smf": "^1.5.0"
   }
 }
