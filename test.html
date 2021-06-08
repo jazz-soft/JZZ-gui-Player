@@ -27,6 +27,7 @@ or <a target=_blank href=https://addons.mozilla.org/en-US/firefox/addon/jazz-mid
 <script><!--
 document.getElementById('player').innerHTML = 'Please run <tt style="background-color:#bbf;"><b>npm install</b></tt> to enable this test.';
 JZZ.synth.Tiny.register('Web Audio');
+JZZ.addMidiOut('Console Log', JZZ.Widget({ _receive: function(msg) { console.log(msg.toString()); }}));
 document.getElementById('player').innerHTML = '';
 document.getElementById('buttons').style.display = 'block';
 document.getElementById('note').style.display = 'block';
