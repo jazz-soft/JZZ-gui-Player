@@ -10,7 +10,7 @@ global.__coverage__ = {};
 describe('In browser', function() {
   before(function() {
     return new Promise(function(resolve) {
-      JSDOM.fromFile('test/test.html', {
+      JSDOM.fromFile('test/demo.html', {
         resources: 'usable',
         runScripts: 'dangerously',
         beforeParse: function(window) {
