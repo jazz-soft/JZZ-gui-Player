@@ -18,9 +18,6 @@ MIDI Player GUI for browsers
 
 See the [**demo**](https://jazz-soft.github.io/modules/smf/index.html)...
 
-## Demo
-<iframe src="https://htmlpreview.github.io/?https://raw.githubusercontent.com/jazz-soft/JZZ-gui-Player/master/test/iframe.html"></iframe>
-
 ## Install
 
 `npm install jzz-gui-player --save`  
