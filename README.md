@@ -21,7 +21,6 @@ See the [**demo**](https://jazz-soft.github.io/modules/smf/index.html)...
 ## Install
 
 `npm install jzz-gui-player --save`  
-or `bower install jzz-gui-player`  
 or `yarn add jzz-gui-player`  
 or get the full development version and minified scripts from [**GitHub**](https://github.com/jazz-soft/JZZ-gui-Player)
 
