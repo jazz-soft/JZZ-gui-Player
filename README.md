@@ -26,9 +26,11 @@ or get the full development version and minified scripts from [**GitHub**](https
 
 ## Usage
 
-##### Web Component (Polymer)
-
+##### Polymer
 https://github.com/jazz-soft/polymer-midi-player
+
+##### React
+https://github.com/jazz-soft/react-midi-player
 
 ##### Plain HTML
 
