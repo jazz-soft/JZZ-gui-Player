@@ -5,12 +5,14 @@
 <script src="../node_modules/jzz/javascript/JZZ.js"></script>
 <script src="../node_modules/jzz-midi-smf/javascript/JZZ.midi.SMF.js"></script>
 <script src=".instrumented/JZZ.gui.Player.js"></script>
+<script src=".instrumented/JZZ.gui.Player.js"></script>
 </head>
 
 <body>
 
 <h1>MIDI Player Test</h1>
-<p id=player></p>
+<p id=player1></p>
+<p id=player2></p>
 
 <script><!--
 
@@ -27,10 +29,54 @@ kEB/GYBAQACQPn8ygD5AAJA+fzKAPkAAkEB/MoBAQACQPn8ygD5AAJA8f2RAZABDZABIf1qAPEAAQEAA
 Q0AASEAK/y8A';
 
 var smf = new JZZ.MIDI.SMF(JZZ.lib.fromBase64(data));
-var player = new JZZ.gui.Player({ at: 'player', file: true });
-player.onLoad = function() { player.speed(20); player.play(); };
-player.load(smf);
+var player1 = new JZZ.gui.Player({ at: 'player1', file: true });
+player1.onLoad = function() { player1.speed(20); player1.play(); };
+player1.load(smf);
 
+var player2 = JZZ.gui.Player({
+  at: 'player2',
+  play: false,
+  pause: false,
+  stop: false,
+  loop: false,
+  midi: false,
+  file: false,
+  link: true,
+  close: true,
+});
+player2.setUrl(1);
+player2.setUrl(2);
+player2.setUrl();
+player2.pause();
+player2.stop();
+player2.loop();
+player2.jump(10);
+player2.jump(0);
+player2.jumpMS(10);
+player2.jumpMS(0);
+
+var player3 = JZZ.gui.Player({
+  play: false,
+  pause: false,
+  stop: false,
+  loop: false,
+  midi: false,
+  file: false,
+  link: true,
+  close: true,
+});
+player3.load(smf);
+player3.pause();
+player3.stop();
+player3.loop();
+player3.jump(10);
+player3.jump(0);
+player3.jumpMS(10);
+player3.jumpMS(0);
+player3.connect(player3);
+player3.connect(player2);
+player3.disconnect(player3);
+player3.disconnect(player2);
 --></script>
 
 </body>

@@ -1,4 +1,5 @@
 (function(global, factory) {
+  /* istanbul ignore next */
   if (typeof exports === 'object' && typeof module !== 'undefined') {
     module.exports = factory;
   }
@@ -13,6 +14,7 @@
   if (!JZZ.gui) JZZ.gui = {};
   if (JZZ.gui.Player) return;
 
+  /* istanbul ignore next */
   function empty() {}
   var _noBtn = { on: empty, off: empty, disable: empty, title: empty, div: {} };
 

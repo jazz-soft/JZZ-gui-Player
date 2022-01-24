@@ -1,6 +1,6 @@
-var JSDOM = require('jsdom').JSDOM;
-var WMT =  require('web-midi-test');
-var assert = require('assert');
+const assert = require('assert');
+const JSDOM = require('jsdom').JSDOM;
+const WMT =  require('web-midi-test');
 
 var midi_out = new WMT.MidiDst('VIRTUAL MIDI-Out');
 midi_out.connect();
@@ -25,5 +25,11 @@ describe('In browser', function() {
   });
   it('it works!', function() {
     assert.equal(0, 0);
+  });
+  after(function() {
+    try {
+      global.window.close();
+    }
+    catch(e) { console.log(e); }
   });
 });
