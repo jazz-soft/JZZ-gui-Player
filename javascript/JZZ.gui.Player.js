@@ -350,7 +350,7 @@
     this._setfilter = f instanceof Function ? f : undefined;
     if (this._player) this._player.filter(this._setfilter);
   };
-  Player.prototype.onConnect = nop;
+  Player.prototype.onSelect = nop;
   Player.prototype.onEnd = nop;
   Player.prototype.onLoad = nop;
   Player.prototype._onEnd = function() {
@@ -403,7 +403,7 @@
           self.midiBtn.title(self._outname);
           self._connect(this);
           self._waiting = false;
-          self.onConnect(self._outname);
+          self.onSelect(self._outname);
           if (self._playing) {
             self._resume();
           }
@@ -560,24 +560,26 @@
       self._newname = undefined;
       self._closeselect();
     }).and(function() {
-      self._outname = self._newname;
-      if (self._out) {
-        if (self._playing) for (var c = 0; c < 16; c++) self._out._receive(JZZ.MIDI.allSoundOff(c));
-        self._disconnect(self._out);
-        self._out.close();
-      }
-      self._out = this;
-      self._connect(this);
       self._newname = undefined;
-      self._closeselect();
-      self.midiBtn.title(self._outname);
-      self.onConnect(self._outname);
-      setTimeout(function() { self.onSelect(self._outname); }, 0);
+      if (self._outname != this.name()) {
+        self._outname = this.name();
+        self._closeselect();
+        if (self._out) {
+          if (self._playing) for (var c = 0; c < 16; c++) self._out._receive(JZZ.MIDI.allSoundOff(c));
+          self._disconnect(self._out);
+          self._out.close();
+        }
+        self._out = this;
+        self._connect(this);
+        self.midiBtn.title(self._outname);
+        self.onSelect(self._outname);
+        setTimeout(function() { self.onSelect(self._outname); }, 0);
+      }
     });
   };
   Player.prototype.select = function(name) {
     var self = this;
-    this._newname = name;
+    this._newname = name || 0;
     if (this._newname == this._outname) {
       this._newname = undefined;
       this._closeselect();
