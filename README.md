@@ -68,6 +68,17 @@ require('jzz-gui-player')(JZZ);
 //...
 ```
 
+##### TypeScript / ES6
+
+```ts
+import { JZZ } from 'jzz';
+import { SMF } from 'jzz-midi-smf';
+import { Player } from 'jzz-gui-player';
+SMF(JZZ);
+Player(JZZ);
+//...
+```
+
 ##### AMD
 
 ```js
