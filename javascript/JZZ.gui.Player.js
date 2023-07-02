@@ -459,12 +459,15 @@
       }
     }
   };
+  Player.prototype.onLoop = nop;
   Player.prototype.loop = function(n) {
     if (this._player) {
       if (typeof n == 'undefined') n = !this._loop;
       if (n == parseInt(n) && n > 0) this._loop = n;
       else this._loop = n ? -1 : 0;
       if (this._loop == 1) this._loop = 0;
+      this._player.loop(this._loop);
+      JZZ.lib.schedule(function() { self.onLoop(n); });
       this._player.loop(this._loop);
       if (this._loop) {
         this.loopBtn.on();
