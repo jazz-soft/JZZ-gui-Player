@@ -161,7 +161,7 @@
       self.fileInput = document.createElement('input');
       self.fileInput.type = 'file';
       self.fileInput.style.position = 'fixed';
-      self.fileInput.style.top = '-1000px';
+      self.fileInput.style.visibility = 'hidden';
       self.fileInput.accept = '.mid, .midi, .kar, .rmi, .syx';
       self.gui.appendChild(self.fileInput);
 
