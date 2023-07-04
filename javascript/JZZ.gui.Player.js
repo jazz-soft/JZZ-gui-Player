@@ -468,7 +468,6 @@
       if (this._loop == 1) this._loop = 0;
       this._player.loop(this._loop);
       JZZ.lib.schedule(function() { self.onLoop(n); });
-      this._player.loop(this._loop);
       if (this._loop) {
         this.loopBtn.on();
         this.loopBtn.title('loop: ' + (this._loop == -1 ? '\u221e' : this._loop));
