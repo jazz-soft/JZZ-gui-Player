@@ -25,7 +25,6 @@
       borderWidth: '1px'
     },
     lbl: {
-      backgroundColor: '#fff',
       color: '#aaa',
       fontSize: '12px',
       fontFamily: 'Arial, Helvetica, sans-serif'
@@ -264,7 +263,6 @@
     self.lbl.style.height = '12px';
     self.lbl.style.padding = '0';
     self.lbl.style.textAlign = 'center';
-    self.lbl.style.backgroundColor = theme.lbl.backgroundColor;
     self.lbl.style.color = theme.lbl.color;
     self.lbl.style.fontSize = theme.lbl.fontSize;
     self.lbl.style.fontFamily = theme.lbl.fontFamily;
