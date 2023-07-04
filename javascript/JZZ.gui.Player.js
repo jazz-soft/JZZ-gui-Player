@@ -528,6 +528,7 @@
   Player.prototype.onLoop = nop;
   Player.prototype.loop = function(n) {
     if (this._player) {
+      var self = this;
       if (typeof n == 'undefined') n = !this._loop;
       if (n == parseInt(n) && n > 0) this._loop = n;
       else this._loop = n ? -1 : 0;
