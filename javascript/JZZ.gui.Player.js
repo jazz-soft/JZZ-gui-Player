@@ -737,5 +737,5 @@
   Player.prototype.connected = function() { return this._outname; };
 
   JZZ.gui.Player = Player;
-  JZZ.gui.Btn = Btn;
+  JZZ.gui.Player.Btn = Btn;
 });
