@@ -20,8 +20,9 @@
   var _noBtn = { on: nop, off: nop, disable: nop, title: nop, div: {} };
 
   var theme = {
-    base: {
+    container: {
       backgroundColor: '#888',
+      borderRadius: '0px',
       borderWidth: '1px'
     },
     lbl: {
@@ -34,8 +35,7 @@
       backgroundColor: {
         on: '#ddd',
         off: '#aaa',
-        disable: '#888',
-        close: '#f44'
+        disable: '#888'
       },
       borderColor: {
         on: '#ccc',
@@ -46,9 +46,15 @@
         on: '#000',
         off: '#000',
         disable: '#555'
+      },
+      close: {
+        borderRadius: '0px',
+        backgroundColor: '#f44'
       }
     },
     rail: {
+      borderRadius: '2px',
+      borderWidth: '1px',
       backgroundColor: {
         enable: '#ccc',
         disable: '#888'
@@ -59,6 +65,8 @@
       }
     },
     caret: {
+      borderRadius: '6px',
+      borderWidth: '1px',
       backgroundColor: {
         mouseDown: '#ddd',
         mouseUp: '#aaa',
@@ -92,7 +100,7 @@
     this.div.style.padding = '2px';
     this.div.style.borderRadius = theme.btn.borderRadius;
     this.div.style.borderStyle = 'solid';
-    this.div.style.borderWidth = theme.base.borderWidth;
+    this.div.style.borderWidth = theme.container.borderWidth;
     this.div.style.borderColor = theme.btn.borderColor.disable;
     this.div.style.backgroundColor = theme.btn.backgroundColor.disable;
     this.div.style.lineHeight = '0';
@@ -127,8 +135,9 @@
     self.gui.style.boxSizing = 'content-box';
     self.gui.style.margin = '0px';
     self.gui.style.padding = '0px';
+    self.gui.style.borderRadius = theme.container.borderRadius;
     self.gui.style.borderStyle = 'none';
-    self.gui.style.backgroundColor = theme.base.backgroundColor;
+    self.gui.style.backgroundColor = theme.container.backgroundColor;
     self.gui.style.width = '270px';
     self.gui.style.height = '40px';
 
@@ -241,7 +250,8 @@
       self.closeBtn.style.left = '262px';
       self.closeBtn.style.margin = '0';
       self.closeBtn.style.padding = '0';
-      self.closeBtn.style.backgroundColor = theme.btn.backgroundColor.close;
+      self.closeBtn.style.borderRadius = theme.btn.close.borderRadius;
+      self.closeBtn.style.backgroundColor = theme.btn.close.backgroundColor;
       self.closeBtn.style.width = '7px';
       self.closeBtn.style.height = '7px';
       self.closeBtn.style.lineHeight = '0';
@@ -278,8 +288,8 @@
     self.rail.style.height = '0';
     self.rail.style.padding = '1px';
     self.rail.style.borderStyle = 'solid';
-    self.rail.style.borderWidth = theme.base.borderWidth;
-    self.rail.style.borderRadius = '2px';
+    self.rail.style.borderWidth = theme.rail.borderWidth;
+    self.rail.style.borderRadius = theme.rail.borderRadius;
     self.rail.style.borderColor = theme.rail.borderColor.disable;
     self.rail.style.backgroundColor = theme.rail.backgroundColor.disable;
     self.gui.appendChild(self.rail);
@@ -294,8 +304,8 @@
     self.caret.style.left = '-5px';
     self.caret.style.padding = '4px';
     self.caret.style.borderStyle = 'solid';
-    self.caret.style.borderWidth = theme.base.borderWidth;
-    self.caret.style.borderRadius = '6px';
+    self.caret.style.borderWidth = theme.caret.borderWidth;
+    self.caret.style.borderRadius = theme.caret.borderRadius;
     self.caret.style.borderColor = theme.caret.borderColor.disable;
     self.caret.style.backgroundColor = theme.caret.backgroundColor.disable;
     self.caret.addEventListener('mousedown', function(e) { self._mousedown(e); });
