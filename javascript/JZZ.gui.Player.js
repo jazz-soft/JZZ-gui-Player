@@ -227,7 +227,7 @@
       self.fileInput.type = 'file';
       self.fileInput.style.position = 'fixed';
       self.fileInput.style.visibility = 'hidden';
-      self.fileInput.accept = '.mid, .midi, .kar, .rmi, .syx';
+      self.fileInput.accept = '.mid, .midi, .midi2, .kar, .rmi, .syx';
       self.gui.appendChild(self.fileInput);
 
       if (window.FileReader) {
@@ -587,7 +587,11 @@
       for (var i = 0; i < bytes.length; i++) data += String.fromCharCode(bytes[i]);
       var smf;
       try {
-        smf = new JZZ.MIDI.SYX(data);
+        smf = new JZZ.MIDI.Clip(data);
+      }
+      catch (err) {}
+      try {
+        if (!smf) smf = new JZZ.MIDI.SYX(data);
       }
       catch (err) {}
       try {
