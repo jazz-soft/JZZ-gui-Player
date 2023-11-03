@@ -1,6 +1,6 @@
 {
   "name": "jzz-gui-player",
-  "version": "1.6.7",
+  "version": "1.6.8",
   "description": "MIDI Player GUI for browsers",
   "main": "javascript/JZZ.gui.Player.js",
   "scripts": {
@@ -12,12 +12,13 @@
     "midi",
     "midi2",
     "midi-file",
+    "midi-clip",
     "midi-player",
     "player"
   ],
   "author": "jazz-soft (https://jazz-soft.net/)",
   "dependencies": {
-    "jzz": "^1.7.3",
+    "jzz": "^1.7.4",
     "jzz-midi-smf": "^1.8.0"
   },
   "devDependencies": {

@@ -1,6 +1,7 @@
 # JZZ-gui-Player
 
-MIDI Player GUI for browsers
+## MIDI Player GUI for browsers
+Supports MIDI 1.0 SMF and MIDI 2.0 Clips
 
 ![Firefox](https://jazz-soft.github.io/img/firefox.jpg)
 ![Chrome](https://jazz-soft.github.io/img/chrome.jpg)
@@ -97,7 +98,8 @@ Please check the [**API Reference**](https://jazz-soft.net/doc/JZZ/midiplayer.ht
 <script>
   var player = new JZZ.gui.Player('player');
   var data = ... // load MIDI file as a string or a buffer
-  player.load(new JZZ.MIDI.SMF(data));
+  player.load(new JZZ.MIDI.SMF(data)); // MIDI 1.0, or
+  // player.load(new JZZ.MIDI.Clip(data)); // MIDI 2.0
   player.play();
 </script>
 ```
