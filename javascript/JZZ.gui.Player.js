@@ -588,19 +588,24 @@
       var bytes = new Uint8Array(e.target.result);
       for (var i = 0; i < bytes.length; i++) data += String.fromCharCode(bytes[i]);
       var smf;
+      var mime = 'audio/midi';
       try {
         smf = new JZZ.MIDI.Clip(data);
+        mime = 'audio/midi2';
       }
       catch (err) {}
       try {
-        if (!smf) smf = new JZZ.MIDI.SYX(data);
+        if (!smf) {
+          smf = new JZZ.MIDI.SYX(data);
+          mime = 'application/octet-stream';
+        }
       }
       catch (err) {}
       try {
         if (!smf) smf = new JZZ.MIDI.SMF(data);
         self.stop();
         JZZ.lib.schedule(function() { self.load(smf); });
-        if (self.linkBtn) self.setUrl('data:audio/midi;base64,' + JZZ.lib.toBase64(data), f.name);
+        if (self.linkBtn) self.setUrl('data:' + mime + ';base64,' + JZZ.lib.toBase64(data), f.name);
       }
       catch (err) { console.log(err.message); }
     };
