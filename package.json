@@ -18,18 +18,18 @@
   ],
   "author": "jazz-soft (https://jazz-soft.net/)",
   "dependencies": {
-    "jzz": "^1.8.4",
-    "jzz-midi-smf": "^1.9.2"
+    "jzz": "^1.8.5",
+    "jzz-midi-smf": "^1.9.4"
   },
   "devDependencies": {
-    "eslint": "^9.3.0",
+    "eslint": "^9.6.0",
     "grunt": "^1.6.1",
     "grunt-contrib-jshint": "^3.2.0",
     "grunt-contrib-uglify": "^5.2.2",
-    "jsdom": "^24.0.0",
+    "jsdom": "^24.1.0",
     "jzz-synth-tiny": "^1.4.0",
-    "mocha": "^10.4.0",
-    "nyc": "^15.1.0",
+    "mocha": "^10.6.0",
+    "nyc": "^17.0.0",
     "web-midi-test": "^1.2.8"
   },
   "runkitExampleFilename": "runkit.js",
