@@ -591,7 +591,7 @@
       var mime = 'audio/midi';
       try {
         smf = new JZZ.MIDI.Clip(data);
-        mime = 'audio/midi2';
+        mime = 'audio/midi-clip';
       }
       catch (err) {}
       try {
