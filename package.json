@@ -1,6 +1,6 @@
 {
   "name": "jzz-gui-player",
-  "version": "1.7.5",
+  "version": "1.7.6",
   "description": "MIDI Player GUI for browsers",
   "main": "javascript/JZZ.gui.Player.js",
   "scripts": {
@@ -18,18 +18,18 @@
   ],
   "author": "jazz-soft (https://jazz-soft.net/)",
   "dependencies": {
-    "jzz": "^1.8.6",
-    "jzz-midi-smf": "^1.9.5"
+    "jzz": "^1.8.7",
+    "jzz-midi-smf": "^1.9.6"
   },
   "devDependencies": {
-    "eslint": "^9.10.0",
+    "eslint": "^9.16.0",
     "grunt": "^1.6.1",
     "grunt-contrib-jshint": "^3.2.0",
     "grunt-contrib-uglify": "^5.2.2",
-    "jsdom": "^25.0.0",
-    "jzz-synth-tiny": "^1.4.1",
-    "mocha": "^10.7.3",
-    "nyc": "^17.0.0",
+    "jsdom": "^25.0.1",
+    "jzz-synth-tiny": "^1.4.2",
+    "mocha": "^11.0.1",
+    "nyc": "^17.1.0",
     "web-midi-test": "^1.2.8"
   },
   "runkitExampleFilename": "runkit.js",
