@@ -3,4 +3,4 @@ minified
 test*
 coverage
 Gruntfile.js
-!test
+
