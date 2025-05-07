@@ -22,13 +22,13 @@
     "jzz-midi-smf": "^1.9.8"
   },
   "devDependencies": {
-    "eslint": "^9.25.1",
+    "eslint": "^9.26.0",
     "grunt": "^1.6.1",
     "grunt-contrib-jshint": "^3.2.0",
     "grunt-contrib-uglify": "^5.2.2",
     "jsdom": "^26.1.0",
     "jzz-synth-tiny": "^1.4.3",
-    "mocha": "^11.1.0",
+    "mocha": "^11.2.2",
     "nyc": "^17.1.0",
     "web-midi-test": "^1.2.9"
   },
