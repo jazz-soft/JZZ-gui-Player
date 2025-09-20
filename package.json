@@ -18,21 +18,20 @@
   ],
   "author": "jazz-soft (https://jazz-soft.net/)",
   "dependencies": {
-    "jzz": "^1.9.3",
-    "jzz-midi-smf": "^1.9.8"
+    "jzz": "^1.9.6",
+    "jzz-midi-smf": "^1.9.9"
   },
   "devDependencies": {
-    "eslint": "^9.26.0",
+    "eslint": "^9.36.0",
     "grunt": "^1.6.1",
     "grunt-contrib-jshint": "^3.2.0",
     "grunt-contrib-uglify": "^5.2.2",
-    "jsdom": "^26.1.0",
+    "jsdom": "^27.0.0",
     "jzz-synth-tiny": "^1.4.3",
-    "mocha": "^11.2.2",
+    "mocha": "^11.7.2",
     "nyc": "^17.1.0",
     "web-midi-test": "^1.2.9"
   },
-  "runkitExampleFilename": "runkit.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/jazz-soft/JZZ-gui-Player.git"
